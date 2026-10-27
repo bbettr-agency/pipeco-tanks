@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: "Archivo", system-ui, sans-serif;
+  --font-body: "IBM Plex Sans", system-ui, sans-serif;
+  --header-h: 5.5rem;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Keep anchored sections clear of the sticky header. */
+  scroll-padding-top: var(--header-h);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: #ffffff;
+  color: #0c1a17;
+  font-family: var(--font-body);
+  /* clip (not hidden) so body does not become a scroll container
+     — hidden on one axis forces the other axis to `auto`. */
+  overflow-x: clip;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #163832;
+  color: #ffffff;
+}
+
+/* Scrollbar — quiet, brand-tinted */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #eaeee8;
+}
+::-webkit-scrollbar-thumb {
+  background: #235347;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #163832;
+}
+
+/* Hairline engineering rule used to separate editorial rows. */
+.rule-hairline {
+  background-image: linear-gradient(
+    to right,
+    rgba(12, 26, 23, 0.14),
+    rgba(12, 26, 23, 0.14)
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
