@@ -21,14 +21,14 @@ export default function Capabilities() {
             <Reveal>
               <SectionIntro
                 tone="dark"
-                overline="Engineering & installation"
+                overline="Turnkey water storage"
                 title={
                   <>
-                    Specified, manufactured and
-                    <br className="hidden sm:block" /> installed by one team.
+                    From the ground up,
+                    <br className="hidden sm:block" /> delivered by one team.
                   </>
                 }
-                description="From first sizing calculation to on-site commissioning, every stage of a Pipeco tank is handled in-house – so the tank that is designed is the tank that gets built and installed."
+                description="Pipeco supplies the sectional tank and builds the civil foundations and elevated steel stands – then installs it all on site, so one team is accountable from the ground up."
               />
             </Reveal>
 
@@ -67,7 +67,7 @@ export default function Capabilities() {
                 tone="onDark"
                 variant="minimal"
                 sizes="(min-width: 1024px) 40vw, 100vw"
-                className="w-full border border-white/10"
+                className="w-full overflow-hidden rounded-[16px] border border-white/10"
               />
             </Reveal>
           </div>

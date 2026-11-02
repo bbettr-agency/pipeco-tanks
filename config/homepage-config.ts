@@ -1,62 +1,63 @@
 import type { ImageSlotId } from "./image-config";
 
 /**
- * Phase 2 homepage content.
+ * Homepage content.
  *
- * Copy is qualitative and category-accurate. No fabricated statistics,
- * certifications, client names, locations or capacity figures. Items that
- * should be confirmed by PIPECO before they carry more specific claims are
- * marked with a comment.
+ * Copy is conversion-focused and category-accurate. Confirmed facts: PIPECO's
+ * tanks are manufactured internationally (in Malaysia) and SUPPLIED for South
+ * African projects; the local offering is turnkey supply + installation plus
+ * locally built civil foundations and elevated steel stands. No fabricated
+ * statistics, certifications, client names, locations, capacities or
+ * engineer-sign-off claims.
  */
 
-/* A — Engineering & Installation Capabilities */
+/* A — Turnkey capabilities (international manufacturing → foundations → stands → install) */
 export const capabilities = [
   {
     index: "01",
-    title: "Design & engineering",
-    body: "Every tank is sized and specified for its load, duty and site conditions.",
+    title: "International manufacturing",
+    body: "Our GRP, pressed steel and stainless steel sectional tanks are manufactured in Malaysia and supplied for projects across South Africa.",
   },
   {
     index: "02",
-    title: "Manufacturing",
-    body: "Modular sectional panels are built for a consistent, repeatable fit.",
+    title: "Civil foundations",
+    body: "Our civil team builds the base your tank sits on – dwarf walls and tank-stand foundations.",
   },
   {
     index: "03",
-    title: "Installation",
-    body: "Our teams assemble and commission each tank on site.",
+    title: "Elevated steel stands",
+    body: "We design and build elevated steel stands for raised, gravity-fed storage.",
   },
   {
     index: "04",
-    title: "Aftercare",
-    body: "Long-term support for the installation, including replacement panels.",
+    title: "Professional installation",
+    body: "Our teams assemble, seal and commission every tank on site.",
   },
 ] as const;
 
 /* C — Industries & Applications.
-   Mining is onboarding-verified. The remaining applications are standard uses
-   of sectional water storage; PIPECO to confirm the final list and any
-   sector-specific wording. */
+   Mining and the refuge-chamber offering are onboarding-verified; the remaining
+   sectors are standard uses of sectional water storage. No named customers. */
 export const applications = [
   {
     name: "Mining",
-    note: "Bulk water storage and specialised underground refuge chambers for active sites.",
+    note: "Bulk process and potable water, plus specialised underground refuge chambers for active sites.",
   },
   {
-    name: "Municipal & bulk water",
-    note: "Reservoirs and reticulation storage for towns and water schemes.",
+    name: "Commercial & industrial",
+    note: "Process, cooling, wash-down and potable storage for plants, factories and developments.",
+  },
+  {
+    name: "Infrastructure & municipal",
+    note: "Reservoirs and bulk storage for water schemes, towns and public infrastructure.",
+  },
+  {
+    name: "Fire-water storage",
+    note: "Dedicated fire-reserve tanks, sized to your fire design.",
   },
   {
     name: "Agriculture",
     note: "Irrigation reserves and livestock water storage.",
-  },
-  {
-    name: "Commercial & industrial",
-    note: "Process, cooling and wash-down water for plants and developments.",
-  },
-  {
-    name: "Fire protection",
-    note: "Dedicated fire-reserve storage, sized to requirement.",
   },
 ] as const;
 
@@ -89,22 +90,22 @@ export const installations: {
 export const whyPoints = [
   {
     index: "01",
-    title: "South African manufacturer",
-    body: "Locally owned and operated, building sectional water storage for South African conditions.",
+    title: "International manufacturing expertise",
+    body: "Pipeco sectional tanks are manufactured in Malaysia and supplied for projects across South Africa.",
   },
   {
     index: "02",
-    title: "A complete sectional range",
-    body: "GRP, pressed steel and stainless steel systems – matched to water quality, environment and capacity.",
+    title: "Local supply and installation",
+    body: "Delivered, assembled and commissioned on site by our South African teams.",
   },
   {
     index: "03",
-    title: "Engineered and installed in-house",
-    body: "From specification through to on-site commissioning, handled by our own teams.",
+    title: "Complete turnkey solutions",
+    body: "Civil foundations, elevated steel stands, tank supply and installation – handled by one accountable team.",
   },
   {
     index: "04",
-    title: "Specialised refuge chambers",
-    body: "Underground sectional-steel refuge chambers for the mining sector.",
+    title: "Commercial & industrial storage",
+    body: "Water storage delivered for commercial, industrial, mining and infrastructure sites.",
   },
 ] as const;

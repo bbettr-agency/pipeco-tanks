@@ -10,7 +10,7 @@ export const siteConfig = {
   businessName: "Pipeco Tanks South Africa",
   shortName: "Pipeco Tanks",
   // Positioning line — qualitative, no unverified numeric claims.
-  tagline: "Sectional water tank manufacturer",
+  tagline: "Sectional water tank supplier and installer",
 
   // Provisional canonical. Domain cut-over is an open decision — the existing
   // WordPress site on pipecoza.com must not be touched.

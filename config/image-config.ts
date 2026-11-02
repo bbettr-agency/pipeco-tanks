@@ -49,7 +49,7 @@ export const imageSlots = {
     alt: "Pipeco GRP sectional water tank",
     ratio: "16 / 10",
     // → /public/images/products/grp-tanks/
-    src: null,
+    src: "/images/products/grp-tanks/5fa7332b-245b-496c-9d83-b1d1a355d941.JPG",
   },
   productSteel: {
     id: "productSteel",
@@ -57,7 +57,7 @@ export const imageSlots = {
     alt: "Pipeco pressed steel sectional water tank",
     ratio: "4 / 3",
     // → /public/images/products/pressed-steel-tanks/
-    src: null,
+    src: "/images/products/pressed-steel-tanks/image2.png",
   },
   productStainless: {
     id: "productStainless",

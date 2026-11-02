@@ -14,12 +14,16 @@ import { cn } from "@/utils/cn";
  */
 type Variant = "primary" | "solid" | "outlineLight" | "outlineInk";
 type Size = "md" | "lg";
+/** Corner radius. `xs` (2px) is the default industrial square; `sm` (8px) is a
+ *  softer corner used on the product enquiry buttons. */
+type Radius = "xs" | "sm";
 
 type ButtonProps = {
   children: ReactNode;
   href?: string;
   variant?: Variant;
   size?: Size;
+  radius?: Radius;
   className?: string;
   withArrow?: boolean;
   external?: boolean;
@@ -29,7 +33,12 @@ type ButtonProps = {
 };
 
 const base =
-  "group inline-flex items-center justify-center gap-2.5 rounded-[2px] font-display font-semibold tracking-tight transition-[background-color,border-color,color] duration-200 ease-house focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brass focus-visible:ring-offset-white";
+  "group inline-flex items-center justify-center gap-2.5 font-display font-semibold tracking-tight transition-[background-color,border-color,color] duration-200 ease-house focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-brass focus-visible:ring-offset-white";
+
+const radii: Record<Radius, string> = {
+  xs: "rounded-[2px]",
+  sm: "rounded-[8px]",
+};
 
 const sizes: Record<Size, string> = {
   md: "px-5 py-2.5 text-sm",
@@ -54,6 +63,7 @@ export default function Button({
   href,
   variant = "primary",
   size = "lg",
+  radius = "xs",
   className,
   withArrow = false,
   external = false,
@@ -61,7 +71,7 @@ export default function Button({
   type = "button",
   ariaLabel,
 }: ButtonProps) {
-  const classes = cn(base, sizes[size], variants[variant], className);
+  const classes = cn(base, radii[radius], sizes[size], variants[variant], className);
 
   const content = (
     <>

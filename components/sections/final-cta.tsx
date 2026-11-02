@@ -1,16 +1,20 @@
+import { Suspense } from "react";
+
 import Container from "@/components/layout/container";
 import Button from "@/components/ui/button";
+import QuoteForm from "@/components/funnel/quote-form";
 import { Reveal } from "@/engine/motion";
 import { siteConfig } from "@/config/site-config";
 
 /**
  * F — Final quotation / contact section.
- * Strong closing conversion band. Primary: Request a Quote. Secondary: WhatsApp.
- * Also surfaces the real contact details (this section is the #contact target).
- * No CRM is connected — the quote action is an email for now.
+ *
+ * Primary conversion is the integrated quote form (right), which posts to the
+ * server-side /api/quote route. WhatsApp and direct contact details remain as
+ * alternatives (left). This section is the #contact target for every
+ * "Request a Quote" CTA on the page.
  */
 const telHref = `tel:${siteConfig.phone.replace(/\s/g, "")}`;
-const mailHref = `mailto:${siteConfig.email}?subject=Tank quote request`;
 const waHref = `https://wa.me/${siteConfig.whatsapp}`;
 
 export default function FinalCta() {
@@ -18,86 +22,70 @@ export default function FinalCta() {
     <section id="contact" className="bg-mint">
       <Container className="py-20 md:py-28">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-          {/* Lead + CTAs */}
-          <Reveal className="lg:col-span-7">
+          {/* Pitch + alternative contact */}
+          <Reveal className="lg:col-span-5">
             <div className="mb-5 flex items-center gap-3">
               <span className="h-px w-10 bg-brass" />
               <span className="font-body text-sm font-medium text-forest-muted">
                 Request a quote
               </span>
             </div>
-            <h2 className="max-w-xl font-display text-4xl font-bold leading-[1.05] tracking-tightest text-forest-base md:text-[3.25rem]">
+            <h2 className="max-w-xl font-display text-4xl font-bold leading-[1.05] tracking-tightest text-forest-base md:text-[3rem]">
               Tell us your capacity and site. We&rsquo;ll size the tank.
             </h2>
-            <p className="mt-6 max-w-lg font-body text-lg leading-8 text-ink/70">
-              Send us your required capacity, footprint and location, and our
+            <p className="mt-6 max-w-md font-body text-lg leading-8 text-ink/70">
+              Send us the tank type, capacity, application and location, and our
               team will revert with a specification and quotation.
             </p>
-            <div className="mt-10 flex flex-wrap items-center gap-5">
-              <Button
-                href={mailHref}
-                variant="primary"
-                size="lg"
-                external
-                withArrow
-                className="px-9 py-4 text-base shadow-card md:text-[17px]"
-              >
-                Request a Quote
-              </Button>
+
+            <div className="mt-8">
               <Button href={waHref} variant="outlineInk" size="lg" external>
                 WhatsApp Sales
               </Button>
             </div>
+
+            <dl className="mt-10 space-y-2.5 border-t border-forest-base/15 pt-6 font-body text-sm">
+              <div className="flex gap-3">
+                <dt className="w-20 shrink-0 text-graphite">Phone</dt>
+                <dd>
+                  <a
+                    href={telHref}
+                    className="font-medium text-forest-base transition-colors hover:text-brass-dark"
+                  >
+                    {siteConfig.phoneDisplay}
+                  </a>
+                </dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-20 shrink-0 text-graphite">Email</dt>
+                <dd>
+                  <a
+                    href={`mailto:${siteConfig.email}`}
+                    className="font-medium text-forest-base transition-colors hover:text-brass-dark"
+                  >
+                    {siteConfig.email}
+                  </a>
+                </dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-20 shrink-0 text-graphite">Address</dt>
+                <dd className="font-medium text-forest-base">
+                  {siteConfig.address}, {siteConfig.locality},{" "}
+                  {siteConfig.postalCode}
+                </dd>
+              </div>
+            </dl>
           </Reveal>
 
-          {/* Contact details */}
-          <Reveal className="lg:col-span-5" delay={0.05}>
-            <div className="rounded-[3px] border border-forest-base/15 bg-white p-8 md:p-10">
-              <dl className="divide-y divide-ink/10">
-                <div className="flex items-baseline justify-between gap-4 pb-4">
-                  <dt className="font-body text-sm text-graphite">Phone</dt>
-                  <dd>
-                    <a
-                      href={telHref}
-                      className="font-body font-medium text-forest-base transition-colors hover:text-brass-dark"
-                    >
-                      {siteConfig.phoneDisplay}
-                    </a>
-                  </dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-4 py-4">
-                  <dt className="font-body text-sm text-graphite">Email</dt>
-                  <dd>
-                    <a
-                      href={`mailto:${siteConfig.email}`}
-                      className="font-body font-medium text-forest-base transition-colors hover:text-brass-dark"
-                    >
-                      {siteConfig.email}
-                    </a>
-                  </dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-4 py-4">
-                  <dt className="font-body text-sm text-graphite">WhatsApp</dt>
-                  <dd>
-                    <a
-                      href={waHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="font-body font-medium text-forest-base transition-colors hover:text-brass-dark"
-                    >
-                      {siteConfig.phoneDisplay}
-                    </a>
-                  </dd>
-                </div>
-                <div className="flex items-baseline justify-between gap-4 pt-4">
-                  <dt className="font-body text-sm text-graphite">Address</dt>
-                  <dd className="text-right font-body font-medium text-forest-base">
-                    {siteConfig.address},<br />
-                    {siteConfig.locality}, {siteConfig.postalCode}
-                  </dd>
-                </div>
-              </dl>
-            </div>
+          {/* Quote form */}
+          <Reveal className="lg:col-span-7" delay={0.05}>
+            <Suspense
+              fallback={
+                <div className="min-h-[520px] rounded-[3px] border border-forest-base/15 bg-white" />
+              }
+            >
+              <QuoteForm />
+            </Suspense>
           </Reveal>
         </div>
       </Container>

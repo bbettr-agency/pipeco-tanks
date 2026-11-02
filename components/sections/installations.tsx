@@ -23,7 +23,7 @@ function Shot({
         tone="onLight"
         variant="minimal"
         sizes={sizes}
-        className="w-full border border-ink/10"
+        className="w-full overflow-hidden rounded-[16px] border border-ink/10"
       />
       <figcaption className="mt-4 flex items-baseline justify-between gap-4 border-t border-ink/10 pt-4">
         <span className="font-display text-base font-semibold tracking-tight text-forest-base">

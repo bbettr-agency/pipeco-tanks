@@ -1,7 +1,10 @@
 import { siteConfig } from "@/config/site-config";
 
 /**
- * Organization / Manufacturer JSON-LD — verified facts only.
+ * Organization JSON-LD — verified facts only.
+ *
+ * NOTE: the South African business SUPPLIES and installs tanks that are
+ * manufactured internationally (Malaysia), so it is not typed as a Manufacturer.
  *
  * Intentionally conservative: name, URL, logo, verified NAP, social profiles
  * and area served (South Africa). No ratings, no capacity claims, no
@@ -11,7 +14,7 @@ import { siteConfig } from "@/config/site-config";
 export function organizationSchema() {
   return {
     "@context": "https://schema.org",
-    "@type": ["Organization", "Manufacturer"],
+    "@type": "Organization",
     name: siteConfig.businessName,
     url: siteConfig.website,
     logo: `${siteConfig.website}/brand/pipeco-logo.png`,
@@ -26,6 +29,14 @@ export function organizationSchema() {
       addressCountry: "ZA",
     },
     areaServed: { "@type": "Country", name: "South Africa" },
+    knowsAbout: [
+      "Sectional water tanks",
+      "GRP sectional water tanks",
+      "Pressed steel sectional water tanks",
+      "Stainless steel sectional water tanks",
+      "Turnkey water storage",
+      "Water tank installation",
+    ],
     sameAs: [siteConfig.social.facebook, siteConfig.social.instagram],
   };
 }

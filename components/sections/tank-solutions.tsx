@@ -75,12 +75,19 @@ export default function TankSolutions() {
                         <p className="mt-4 max-w-md font-body leading-7 text-ink/70">
                           {product.lede}
                         </p>
+                        <p className="mt-4 max-w-md font-body text-sm leading-6 text-graphite">
+                          {product.advantages}
+                        </p>
 
-                        {/* Material line — category-accurate, no unverified spec on the public page. */}
-                        <p className="mt-6 flex items-center gap-3 font-body text-sm">
-                          <span className="h-px w-7 bg-brass" aria-hidden />
-                          <span className="font-medium text-forest-base">
-                            {product.material}
+                        {/* Ideal for — applications, no unverified specs. */}
+                        <p className="mt-5 flex items-start gap-3 font-body text-sm">
+                          <span
+                            className="mt-2 h-px w-7 shrink-0 bg-brass"
+                            aria-hidden
+                          />
+                          <span className="text-forest-base">
+                            <span className="font-semibold">Ideal for</span>{" "}
+                            {product.applications}
                           </span>
                         </p>
 
@@ -89,6 +96,7 @@ export default function TankSolutions() {
                             href={product.enquiryHref}
                             variant="outlineInk"
                             size="md"
+                            radius="sm"
                             withArrow
                           >
                             Enquire about {product.shortName}
@@ -110,7 +118,7 @@ export default function TankSolutions() {
                       tone="onLight"
                       variant="minimal"
                       sizes="(min-width: 1024px) 55vw, 100vw"
-                      className="w-full border border-ink/10"
+                      className="w-full overflow-hidden rounded-[16px] border border-ink/10"
                     />
                   </div>
                 </article>

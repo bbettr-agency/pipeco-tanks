@@ -19,7 +19,7 @@ export default function WhyPipeco() {
               tone="dark"
               overline="Why Pipeco"
               title="Water storage you only buy once."
-              description="With more than 20 years in sectional water storage, Pipeco builds tanks to last – and stands behind them for the life of the installation."
+              description="Backed by more than 20 years of sectional water tank experience, Pipeco supplies internationally manufactured tanks and delivers the complete turnkey solution – from the foundation to the final panel."
             />
           </Reveal>
 

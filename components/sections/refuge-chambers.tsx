@@ -53,7 +53,12 @@ export default function RefugeChambers() {
                 storage tanks.
               </p>
               <div className="mt-10">
-                <Button href="#contact" variant="primary" size="lg" withArrow>
+                <Button
+                  href="/?tank=refuge#contact"
+                  variant="primary"
+                  size="lg"
+                  withArrow
+                >
                   Enquire about refuge chambers
                 </Button>
               </div>

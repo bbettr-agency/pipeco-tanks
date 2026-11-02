@@ -37,8 +37,9 @@ export default function SiteFooter() {
               />
             </Link>
             <p className="mt-6 max-w-sm font-body leading-7 text-white/60">
-              Pipeco Tanks South Africa designs, manufactures and installs GRP,
-              pressed steel and stainless steel sectional water storage.
+              Pipeco Tanks South Africa supplies and installs GRP, pressed steel
+              and stainless steel sectional water tanks, with complete turnkey
+              solutions.
             </p>
             <div className="mt-7 flex items-center gap-3">
               <a
