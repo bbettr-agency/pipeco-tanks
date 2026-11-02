@@ -69,14 +69,21 @@ export default function TankSolutions() {
                   >
                     {/* Copy (order 1 on mobile) */}
                     <div className="order-1">
-                      <div className="flex items-start gap-5 md:gap-6">
+                      {/*
+                        Mobile: index stacks above the copy so the heading,
+                        description and the rest sit flush against the same
+                        container gutter as the image (one content grid).
+                        Desktop (lg): index returns beside the copy — zigzag
+                        and indent unchanged.
+                      */}
+                      <div className="lg:flex lg:items-start lg:gap-6">
                         <span
                           aria-hidden
-                          className="font-display text-4xl font-bold leading-none text-forest-base/15 md:text-5xl"
+                          className="block font-display text-4xl font-bold leading-none text-forest-base/15 md:text-5xl"
                         >
                           {product.index}
                         </span>
-                        <div className="min-w-0">
+                        <div className="mt-4 min-w-0 lg:mt-0">
                           <h3 className="font-display text-2xl font-bold leading-tight tracking-tight text-forest-base md:text-[1.9rem]">
                             {product.name}
                           </h3>
@@ -110,10 +117,11 @@ export default function TankSolutions() {
                       spacing comes from the grid gap; desktop keeps the mt-8.
                     */}
                     <div className="order-3 mt-0 lg:mt-8">
-                      <div className="flex items-start gap-5 md:gap-6">
+                      <div className="lg:flex lg:items-start lg:gap-6">
+                        {/* Spacer only on desktop, to match the copy indent. */}
                         <span
                           aria-hidden
-                          className="invisible font-display text-4xl font-bold leading-none md:text-5xl"
+                          className="hidden font-display text-4xl font-bold leading-none md:text-5xl lg:block lg:invisible"
                         >
                           {product.index}
                         </span>
