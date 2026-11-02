@@ -63,9 +63,9 @@ export const imageSlots = {
     id: "productStainless",
     label: "STAINLESS STEEL WATER TANK IMAGE",
     alt: "Pipeco pressed stainless steel sectional water tank",
-    ratio: "16 / 11",
+    ratio: "16 / 10",
     // → /public/images/products/stainless-steel-tanks/
-    src: null,
+    src: "/images/products/stainless-steel-tanks/stainless-steel-sectional-tank.jpeg",
   },
   capabilities: {
     id: "capabilities",
@@ -81,31 +81,31 @@ export const imageSlots = {
     alt: "Pipeco sectional steel mining refuge chamber",
     ratio: "4 / 5",
     // → /public/images/mining-refuge-chambers/
-    src: null,
+    src: "/images/mining-refuge-chambers/mining-refuge-chamber.jpeg",
   },
   install1: {
     id: "install1",
     label: "INSTALLATION IMAGE 01",
-    alt: "Pipeco sectional water tank installation",
-    ratio: "4 / 3",
+    alt: "Completed Pipeco sectional water tank installation",
+    ratio: "16 / 9",
     // → /public/images/projects/completed-installations/
-    src: null,
+    src: "/images/projects/completed-installations/installation-1.jpeg",
   },
   install2: {
     id: "install2",
     label: "INSTALLATION IMAGE 02",
-    alt: "Pipeco sectional water tank installation",
-    ratio: "1 / 1",
+    alt: "Completed Pipeco sectional water tank installation",
+    ratio: "16 / 9",
     // → /public/images/projects/completed-installations/
-    src: null,
+    src: "/images/projects/completed-installations/installation-2.jpeg",
   },
   install3: {
     id: "install3",
     label: "INSTALLATION IMAGE 03",
-    alt: "Pipeco sectional water tank installation",
-    ratio: "1 / 1",
+    alt: "Completed Pipeco sectional water tank installation",
+    ratio: "16 / 9",
     // → /public/images/projects/completed-installations/
-    src: null,
+    src: "/images/projects/completed-installations/installation-3.png",
   },
 } as const satisfies Record<string, ImageSlot>;
 
