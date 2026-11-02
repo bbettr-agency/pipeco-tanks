@@ -70,10 +70,10 @@ export const imageSlots = {
   capabilities: {
     id: "capabilities",
     label: "ENGINEERING & INSTALLATION IMAGE",
-    alt: "Pipeco engineering and installation work on site",
-    ratio: "4 / 5",
+    alt: "Site preparation and civil foundation works for a Pipeco installation",
+    ratio: "16 / 10",
     // → /public/images/homepage/capabilities/
-    src: null,
+    src: "/images/homepage/capabilities/turnkey-water-storage.jpeg",
   },
   refuge: {
     id: "refuge",
