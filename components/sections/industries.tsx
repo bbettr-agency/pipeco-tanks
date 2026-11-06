@@ -15,6 +15,7 @@ export default function Industries() {
         <Reveal>
           <SectionIntro
             tone="dark"
+            align="center"
             overline="Industries & applications"
             title="Where Pipeco tanks are put to work."
             description="Sectional water storage scales from a single rooftop reserve to bulk municipal and mining supply. These are the settings our tanks are built for."

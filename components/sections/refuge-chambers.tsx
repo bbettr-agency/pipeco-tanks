@@ -19,7 +19,7 @@ export default function RefugeChambers() {
     <section id="refuge-chambers" className="bg-white">
       <Container className="py-24 md:py-32">
         <Reveal>
-          <div className="overflow-hidden rounded-[3px] border border-ink/10 lg:grid lg:grid-cols-12">
+          <div className="overflow-hidden rounded-[16px] border border-ink/10 lg:grid lg:grid-cols-12">
             {/* Image — fills the column height on desktop, a controlled band
                 when the block stacks on tablet/mobile. */}
             <div className="relative h-72 sm:h-80 lg:col-span-5 lg:h-auto">
