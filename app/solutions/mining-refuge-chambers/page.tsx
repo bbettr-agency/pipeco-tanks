@@ -3,11 +3,15 @@ import { Check } from "lucide-react";
 
 import Container from "@/components/layout/container";
 import PageHero from "@/components/layout/page-hero";
+import RelatedCards from "@/components/sections/related-cards";
 import SectionIntro from "@/components/ui/section-intro";
 import Button from "@/components/ui/button";
+import Faq from "@/components/ui/faq";
 import CtaBand from "@/components/sections/cta-band";
+import JsonLd from "@/components/ui/json-ld";
 import { Reveal, Stagger } from "@/engine/motion";
 import { createMetadata } from "@/lib/metadata";
+import { breadcrumbSchema, serviceSchema, faqSchema } from "@/lib/schema";
 import { imageSlots } from "@/config/image-config";
 
 export const metadata: Metadata = createMetadata({
@@ -35,28 +39,60 @@ const reasons = [
   },
 ];
 
+const faqs = [
+  {
+    q: "What is a mining refuge chamber?",
+    a: "A sealed, structurally sound space built into an underground operation where crews can shelter during an emergency.",
+  },
+  {
+    q: "How is it built?",
+    a: "From sectional steel panels — the same proven engineering approach as our water storage tanks — engineered to the mine's requirements and installed on site.",
+  },
+  {
+    q: "What size and rating can you provide?",
+    a: "Chamber size, rating and emergency provisioning are engineered to your mine's requirements and confirmed with Pipeco.",
+  },
+  {
+    q: "Do you install on site?",
+    a: "Yes — Pipeco designs, supplies and installs the chamber, so one team is accountable from start to finish.",
+  },
+];
+
 export default function RefugeChambersPage() {
   return (
     <main>
+      <JsonLd
+        data={[
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Solutions", path: "/solutions" },
+            { name: "Mining refuge chambers", path: "/solutions/mining-refuge-chambers" },
+          ]),
+          serviceSchema({
+            name: "Mining refuge chambers",
+            description:
+              "Sectional steel underground mining refuge chambers, engineered and installed by Pipeco.",
+            path: "/solutions/mining-refuge-chambers",
+            serviceType: "Mining refuge chamber supply and installation",
+          }),
+          faqSchema(faqs),
+        ]}
+      />
+
       <PageHero
+        variant="photo"
         overline="A Pipeco specialisation"
         title="Underground mining refuge chambers."
         lead="Sectional steel refuge chambers, engineered and built into mining operations — a sealed, structurally sound place for crews to shelter in an emergency underground."
-        image={imageSlots.refuge}
+        media={{ slot: imageSlots.refuge }}
+        focus="center 40%"
         breadcrumb={[
           { label: "Home", href: "/" },
-          {
-            label: "Mining refuge chambers",
-            href: "/solutions/mining-refuge-chambers",
-          },
+          { label: "Solutions", href: "/solutions" },
+          { label: "Mining refuge chambers", href: "/solutions/mining-refuge-chambers" },
         ]}
       >
-        <Button
-          href="/contact?tank=refuge"
-          variant="primary"
-          size="lg"
-          withArrow
-        >
+        <Button href="/contact?tank=refuge" variant="primary" size="lg" withArrow>
           Enquire about refuge chambers
         </Button>
       </PageHero>
@@ -113,7 +149,7 @@ export default function RefugeChambersPage() {
         </Container>
       </section>
 
-      {/* Why Pipeco refuge chambers */}
+      {/* Why Pipeco */}
       <section className="bg-forest-deepest text-white">
         <Container className="py-20 md:py-28">
           <Reveal>
@@ -142,6 +178,28 @@ export default function RefugeChambersPage() {
           </Stagger>
         </Container>
       </section>
+
+      <Faq items={faqs} title="Refuge chamber questions." />
+
+      <RelatedCards
+        overline="Related"
+        title="Explore our water storage."
+        columns={2}
+        cards={[
+          {
+            label: "Turnkey installations",
+            href: "/solutions/turnkey-installations",
+            eyebrow: "Solution",
+            description: "Foundations, elevated stands and complete tank installation.",
+          },
+          {
+            label: "Sectional water tanks",
+            href: "/products",
+            eyebrow: "Products",
+            description: "GRP, pressed steel and stainless steel ranges.",
+          },
+        ]}
+      />
 
       <CtaBand
         title="Specifying a refuge chamber?"

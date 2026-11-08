@@ -2,29 +2,22 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X, Phone, ChevronDown } from "lucide-react";
 
 import Container from "@/components/layout/container";
 import Logo from "@/components/ui/logo";
 import Button from "@/components/ui/button";
-import { navLinks, quoteCta } from "@/config/navigation-config";
+import { navItems, quoteCta, type NavItem } from "@/config/navigation-config";
 import { siteConfig } from "@/config/site-config";
 import { useScrollPast, THRESHOLD } from "@/engine/motion";
 import { cn } from "@/utils/cn";
 
-function NavLink({
-  href,
-  label,
-  onClick,
-}: {
-  href: string;
-  label: string;
-  onClick?: () => void;
-}) {
+/* ---------------------------------------------------------------- desktop */
+
+function TopLink({ href, label }: { href: string; label: string }) {
   return (
     <Link
       href={href}
-      onClick={onClick}
       className="group relative py-2 font-body text-[15px] font-medium tracking-[0.01em] text-forest-base/80 transition-colors duration-200 hover:text-forest-base focus:outline-none focus-visible:text-forest-base"
     >
       {label}
@@ -32,6 +25,47 @@ function NavLink({
     </Link>
   );
 }
+
+function Dropdown({ item }: { item: NavItem }) {
+  return (
+    <div className="group relative">
+      <Link
+        href={item.href}
+        className="inline-flex items-center gap-1.5 py-2 font-body text-[15px] font-medium tracking-[0.01em] text-forest-base/80 transition-colors duration-200 hover:text-forest-base focus:outline-none focus-visible:text-forest-base"
+      >
+        {item.label}
+        <ChevronDown
+          className="h-4 w-4 text-forest-base/50 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180"
+          strokeWidth={2}
+        />
+      </Link>
+
+      {/* Panel — opens on hover and keyboard focus. */}
+      <div className="invisible absolute left-1/2 top-full z-50 w-[22rem] -translate-x-1/2 pt-3 opacity-0 transition-[opacity,transform] duration-200 ease-house group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+        <div className="overflow-hidden rounded-[14px] border border-ink/10 bg-white p-2 shadow-header">
+          {item.children?.map((child) => (
+            <Link
+              key={child.href}
+              href={child.href}
+              className="block rounded-[10px] px-4 py-3 transition-colors hover:bg-shell focus:outline-none focus-visible:bg-shell"
+            >
+              <span className="block font-display text-[15px] font-semibold tracking-tight text-forest-base">
+                {child.label}
+              </span>
+              {child.description && (
+                <span className="mt-0.5 block font-body text-[13px] text-graphite">
+                  {child.description}
+                </span>
+              )}
+            </Link>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ----------------------------------------------------------------- header */
 
 export default function SiteHeader() {
   const scrolled = useScrollPast(THRESHOLD.header);
@@ -59,13 +93,14 @@ export default function SiteHeader() {
       <Container className="flex h-[5.5rem] items-center justify-between gap-8">
         <Logo />
 
-        <nav
-          aria-label="Primary"
-          className="hidden items-center gap-10 lg:flex"
-        >
-          {navLinks.map((link) => (
-            <NavLink key={link.href} href={link.href} label={link.label} />
-          ))}
+        <nav aria-label="Primary" className="hidden items-center gap-9 lg:flex">
+          {navItems.map((item) =>
+            item.children ? (
+              <Dropdown key={item.href} item={item} />
+            ) : (
+              <TopLink key={item.href} href={item.href} label={item.label} />
+            )
+          )}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -110,23 +145,38 @@ export default function SiteHeader() {
           open ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"
         )}
       >
-        <div className="flex h-[calc(100vh-5.5rem)] flex-col bg-forest-deepest px-6 pb-10 pt-8 text-white">
-          <nav
-            aria-label="Mobile"
-            className="flex flex-col divide-y divide-white/10 border-y border-white/10"
-          >
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={close}
-                className="flex items-center justify-between py-4 font-display text-xl font-semibold tracking-tight text-white/90 transition-colors hover:text-brass-light"
+        <div className="flex h-[calc(100vh-5.5rem)] flex-col overflow-y-auto bg-forest-deepest px-6 pb-10 pt-6 text-white">
+          <nav aria-label="Mobile" className="flex flex-col">
+            {navItems.map((item) => (
+              <div
+                key={item.href}
+                className="border-b border-white/10 py-4 first:pt-2"
               >
-                {link.label}
-                <span className="text-sage/60" aria-hidden>
-                  →
-                </span>
-              </Link>
+                <Link
+                  href={item.href}
+                  onClick={close}
+                  className="flex items-center justify-between font-display text-xl font-semibold tracking-tight text-white/90 transition-colors hover:text-brass-light"
+                >
+                  {item.label}
+                  <span className="text-sage/60" aria-hidden>
+                    →
+                  </span>
+                </Link>
+                {item.children && (
+                  <div className="mt-3 flex flex-col gap-2.5 pl-1">
+                    {item.children.slice(1).map((child) => (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        onClick={close}
+                        className="font-body text-[15px] text-white/60 transition-colors hover:text-brass-light"
+                      >
+                        {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
 

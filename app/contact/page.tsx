@@ -6,8 +6,10 @@ import Container from "@/components/layout/container";
 import PageHero from "@/components/layout/page-hero";
 import Button from "@/components/ui/button";
 import QuoteForm from "@/components/funnel/quote-form";
+import JsonLd from "@/components/ui/json-ld";
 import { Reveal } from "@/engine/motion";
 import { createMetadata } from "@/lib/metadata";
+import { breadcrumbSchema } from "@/lib/schema";
 import { siteConfig } from "@/config/site-config";
 
 export const metadata: Metadata = createMetadata({
@@ -32,10 +34,25 @@ const details = [
   },
 ];
 
+const include = [
+  "Tank type (or ask us to recommend one)",
+  "Required capacity, if known",
+  "Application — potable, process, fire, irrigation…",
+  "Site location and any access constraints",
+];
+
 export default function ContactPage() {
   return (
     <main>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: "Home", path: "/" },
+          { name: "Contact", path: "/contact" },
+        ])}
+      />
+
       <PageHero
+        variant="band"
         overline="Contact"
         title="Request a quote."
         lead="Send us the tank type, capacity, application and location, and our team will revert with a specification and quotation. Prefer to talk? Call or WhatsApp us."
@@ -48,7 +65,7 @@ export default function ContactPage() {
       <section className="bg-mint">
         <Container className="py-20 md:py-28">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
-            {/* Direct contact */}
+            {/* Direct contact + guidance */}
             <Reveal className="lg:col-span-5">
               <h2 className="font-display text-2xl font-bold tracking-tight text-forest-base">
                 Talk to our team
@@ -99,7 +116,22 @@ export default function ContactPage() {
                 </li>
               </ul>
 
-              <div className="mt-9">
+              {/* What to include */}
+              <div className="mt-10 rounded-[16px] border border-forest-base/15 bg-white/70 p-6">
+                <h3 className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-forest-muted">
+                  What to include
+                </h3>
+                <ul className="mt-4 space-y-2 font-body text-sm leading-6 text-ink/75">
+                  {include.map((item) => (
+                    <li key={item} className="flex gap-2.5">
+                      <span aria-hidden className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-brass" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-8">
                 <Button href={waHref} variant="outlineInk" size="lg" external>
                   WhatsApp Sales
                 </Button>
