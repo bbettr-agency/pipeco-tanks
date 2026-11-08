@@ -43,7 +43,7 @@ export default function Hero() {
         className="absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(90deg, rgba(5,31,32,0.96) 0%, rgba(5,31,32,0.88) 24%, rgba(5,31,32,0.58) 48%, rgba(5,31,32,0.22) 72%, rgba(5,31,32,0.05) 100%)",
+            "linear-gradient(90deg, rgba(5,31,32,0.55) 0%, rgba(5,31,32,0.82) 35%, rgba(5,31,32,0.86) 50%, rgba(5,31,32,0.82) 65%, rgba(5,31,32,0.55) 100%)",
         }}
       />
       {/* Extra darkening on small screens for contrast under full-width text. */}
@@ -61,8 +61,8 @@ export default function Hero() {
       />
 
       <Container className="relative flex min-h-[600px] flex-col py-10 md:min-h-[calc(100vh-5.5rem)] md:py-12">
-        {/* Headline block — one tight content group anchored in the upper area */}
-        <div className="max-w-2xl md:pt-[4vh] lg:pt-[6vh]">
+        {/* Headline block — one centred content group anchored in the upper area */}
+        <div className="mx-auto max-w-2xl text-center md:pt-[4vh] lg:pt-[6vh]">
             <Reveal {...hero.step(0)}>
               <p className="font-body text-xs font-semibold uppercase tracking-[0.22em] text-brass-light">
                 Sectional water storage solutions
@@ -77,14 +77,14 @@ export default function Hero() {
             <Reveal
               {...hero.step(1)}
               as="p"
-              className="mt-5 max-w-xl font-body text-lg leading-8 text-white/80"
+              className="mx-auto mt-5 max-w-xl font-body text-lg leading-8 text-white/80"
             >
               GRP, pressed steel and stainless steel sectional water tanks –
               supplied and installed with complete turnkey solutions, including
               civil foundations and elevated steel stands.
             </Reveal>
 
-            <Reveal {...hero.step(2)} className="mt-7 flex flex-wrap gap-4">
+            <Reveal {...hero.step(2)} className="mt-7 flex flex-wrap justify-center gap-4">
               <Button href={quoteCta.href} variant="primary" size="lg" withArrow>
                 Request a Quote
               </Button>
