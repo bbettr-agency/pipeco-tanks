@@ -1,8 +1,10 @@
 import Container from "@/components/layout/container";
 import Placeholder from "@/components/ui/placeholder";
 import SectionIntro from "@/components/ui/section-intro";
+import Button from "@/components/ui/button";
 import { Reveal } from "@/engine/motion";
 import { imageSlots, type ImageSlot } from "@/config/image-config";
+import { projectsCta } from "@/config/navigation-config";
 
 /**
  * D — Selected Installations.
@@ -60,6 +62,19 @@ export default function Installations() {
             />
           </Reveal>
         </div>
+
+        {/* View all projects */}
+        <Reveal className="mt-12 flex justify-center md:mt-14">
+          <Button
+            href={projectsCta.href}
+            variant="outlineInk"
+            size="lg"
+            radius="sm"
+            withArrow
+          >
+            {projectsCta.label}
+          </Button>
+        </Reveal>
       </Container>
     </section>
   );

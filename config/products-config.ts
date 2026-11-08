@@ -27,6 +27,15 @@ export type Product = {
   /** Quote-form tank-type value this product preselects. */
   tankType: string;
   enquiryHref: string;
+  /** URL segment for the product detail page (/products/<pageSlug>). */
+  pageSlug: string;
+  /**
+   * Additional real photographs of this range for the detail-page gallery.
+   * Paths point at existing, organised assets in /public/images — never
+   * fabricated or substituted imagery. Empty when only the feature photo
+   * has been supplied so far.
+   */
+  gallery: string[];
 };
 
 export const products: Product[] = [
@@ -44,6 +53,14 @@ export const products: Product[] = [
     specPending: "Panel sizes & capacities – to be confirmed by PIPECO",
     tankType: "grp",
     enquiryHref: "/?tank=grp#contact",
+    pageSlug: "grp-tanks",
+    gallery: [
+      "/images/products/grp-tanks/1e7d5b8b-5286-4e2f-bc02-54eaa63b288b.JPG",
+      "/images/products/grp-tanks/3d5d34e3-aa0e-4852-b971-69516c242d98.JPG",
+      "/images/products/grp-tanks/799ac4f0-87bb-48ce-a45f-163afafb6730.JPG",
+      "/images/products/grp-tanks/dbde4e5c-854b-4864-90d0-8e515a0bc7bd.JPG",
+      "/images/products/grp-tanks/eb0a38e3-ab4b-4266-b3f6-0b919d85b5b4.JPG",
+    ],
   },
   {
     index: "02",
@@ -59,6 +76,15 @@ export const products: Product[] = [
     specPending: "Coatings & capacities – to be confirmed by PIPECO",
     tankType: "pressed-steel",
     enquiryHref: "/?tank=pressed-steel#contact",
+    pageSlug: "pressed-steel-tanks",
+    gallery: [
+      "/images/products/pressed-steel-tanks/image1.png",
+      "/images/products/pressed-steel-tanks/image5.png",
+      "/images/products/pressed-steel-tanks/image6.png",
+      "/images/products/pressed-steel-tanks/image7.png",
+      "/images/products/pressed-steel-tanks/image9.png",
+      "/images/products/pressed-steel-tanks/image10.png",
+    ],
   },
   {
     index: "03",
@@ -74,5 +100,8 @@ export const products: Product[] = [
     specPending: "Grades & capacities – to be confirmed by PIPECO",
     tankType: "stainless",
     enquiryHref: "/?tank=stainless#contact",
+    pageSlug: "stainless-steel-tanks",
+    // Only the feature photograph has been supplied for this range so far.
+    gallery: [],
   },
 ];
