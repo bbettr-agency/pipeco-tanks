@@ -2,16 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   FIELD_LIMITS,
   HONEYPOT_FIELD,
-  WEBHOOK_ENV_VAR,
   tankTypeValues,
   solutionTypeValues,
 } from "@/config/quote-config";
+import { createEnquiry, ghlConfigured } from "@/lib/ghl";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-const WEBHOOK_URL = process.env[WEBHOOK_ENV_VAR];
-const WEBHOOK_TIMEOUT_MS = 10_000;
 
 // Best-effort, in-memory rate limit. Resets per serverless instance, so it is a
 // speed bump against bursts, not a hard guarantee — the honeypot and server-side
@@ -96,9 +93,9 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Fail safe when the webhook is not yet configured. Never pretend success and
+  // Fail safe when the CRM token is not configured. Never pretend success and
   // never silently drop a genuine enquiry.
-  if (!WEBHOOK_URL) {
+  if (!ghlConfigured()) {
     return NextResponse.json(
       {
         error:
@@ -109,23 +106,23 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), WEBHOOK_TIMEOUT_MS);
   try {
-    const res = await fetch(WEBHOOK_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        source: "pipeco-homepage-quote",
-        submittedAt: new Date().toISOString(),
-        ...data,
-      }),
-      signal: controller.signal,
+    const result = await createEnquiry({
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      tankType: data.tankType,
+      capacity: data.capacity,
+      location: data.location,
+      requirements: data.requirements,
+      solution: data.solution,
+      submittedAt: new Date().toISOString(),
     });
-    clearTimeout(timer);
 
-    // Only report success when the webhook actually accepted the submission.
-    if (!res.ok) {
+    // Only report success once the CRM confirms BOTH the contact and the
+    // opportunity. No token or PII is ever logged.
+    if (!result.ok) {
+      console.error(`[quote] GHL ${result.stage} step failed (status ${result.status}).`);
       return NextResponse.json(
         {
           error:
@@ -136,17 +133,14 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ ok: true });
-  } catch (err) {
-    clearTimeout(timer);
-    const aborted = err instanceof Error && err.name === "AbortError";
-    // Deliberately no PII logged.
+  } catch {
+    // Network/timeout or unexpected error. Deliberately no PII logged.
     return NextResponse.json(
       {
-        error: aborted
-          ? "The request timed out. Please try again, or email / WhatsApp us."
-          : "We couldn’t send your enquiry just now. Please try again, or email / WhatsApp us.",
+        error:
+          "We couldn’t send your enquiry just now. Please try again, or email / WhatsApp us.",
       },
-      { status: aborted ? 504 : 502 }
+      { status: 502 }
     );
   }
 }
