@@ -45,7 +45,7 @@ export default function Industries() {
               <Reveal key={app.name} preset="fadeUpItem" className="h-full">
                 <Link
                   href={app.href}
-                  className="group relative flex h-full flex-col border-t-2 border-t-brass bg-white/[0.03] p-7 ring-1 ring-inset ring-white/10 transition-colors duration-200 ease-house hover:bg-white/[0.06] hover:ring-white/20 md:p-8"
+                  className="group relative flex h-full flex-col overflow-hidden rounded-[16px] border-t-2 border-t-brass bg-white/[0.03] p-7 ring-1 ring-inset ring-white/10 transition-colors duration-200 ease-house hover:bg-white/[0.06] hover:ring-white/20 md:p-8"
                 >
                   <div className="flex items-start justify-between">
                     <Icon

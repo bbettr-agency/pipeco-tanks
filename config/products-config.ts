@@ -102,6 +102,7 @@ export const products: Product[] = [
     turnkeyImage: "/images/projects/completed-installations/install-elevated-crane.jpeg",
     turnkeyAlt: "Sectional water tank lifted onto an elevated steel tower by crane during a Pipeco installation",
     gallery: [
+      "/images/products/pressed-steel-tanks/image1.png",
       "/images/products/pressed-steel-tanks/image5.png",
       "/images/products/pressed-steel-tanks/image6.png",
       "/images/products/pressed-steel-tanks/image7.png",
@@ -131,7 +132,8 @@ export const products: Product[] = [
     heroImage: "/images/products/stainless-steel-tanks/stainless-steel-sectional-tank.jpeg",
     turnkeyImage: "/images/projects/completed-installations/install-steelworks.jpeg",
     turnkeyAlt: "Structural steelworks for a sectional water reservoir during a Pipeco installation",
-    // No additional verified stainless photographs have been supplied.
-    gallery: [],
+    // Only the client's designated stainless image is available — reused in the
+    // gallery (same as the hero) so the range still shows a gallery section.
+    gallery: ["/images/products/stainless-steel-tanks/stainless-steel-sectional-tank.jpeg"],
   },
 ];
