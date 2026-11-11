@@ -119,11 +119,12 @@ export const projects: Project[] = [
     src: "/images/projects/completed-installations/installation-2.jpeg",
     alt: "Concrete tank base and dwarf walls for a Pipeco installation",
   },
+  /* ---- Stainless Steel Tanks (client's designated stainless photograph) ---- */
   {
-    caption: "Fire-water (hydrant) tank",
-    category: "Tank Installations",
+    caption: "Stainless steel sectional tank",
+    category: "Stainless Steel Tanks",
     src: "/images/products/stainless-steel-tanks/stainless-steel-sectional-tank.jpeg",
-    alt: "Installed sectional fire-water hydrant tank",
+    alt: "Pipeco stainless steel sectional water tank installation",
   },
 ];
 
