@@ -33,23 +33,26 @@ export default function Hero() {
         fill
         priority
         sizes="100vw"
-        quality={85}
-        className="-z-20 object-cover object-center"
+        quality={88}
+        className="-z-20 object-cover"
+        style={{ objectPosition: "center 32%" }}
       />
 
-      {/* Forest overlay — heaviest on the left, clearing to the right. */}
+      {/* Forest wash — enough to keep the centred white headline legible while
+          the GRP tank stays clearly visible through it. Slightly deeper behind
+          the text band, lighter at the edges. */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(90deg, rgba(5,31,32,0.55) 0%, rgba(5,31,32,0.82) 35%, rgba(5,31,32,0.86) 50%, rgba(5,31,32,0.82) 65%, rgba(5,31,32,0.55) 100%)",
+            "linear-gradient(90deg, rgba(5,31,32,0.48) 0%, rgba(5,31,32,0.64) 35%, rgba(5,31,32,0.66) 50%, rgba(5,31,32,0.64) 65%, rgba(5,31,32,0.48) 100%)",
         }}
       />
       {/* Extra darkening on small screens for contrast under full-width text. */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-10 bg-forest-deepest/55 md:bg-transparent"
+        className="absolute inset-0 -z-10 bg-forest-deepest/40 md:bg-transparent"
       />
       {/* Bottom darken so the credibility row stays legible. */}
       <div

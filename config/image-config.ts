@@ -39,9 +39,10 @@ export const imageSlots = {
   hero: {
     id: "hero",
     label: "HERO — INDUSTRIAL INSTALLATION IMAGE",
-    alt: "Pipeco pressed steel sectional water tank installation in South Africa",
+    alt: "Pipeco GRP sectional water tank installation in South Africa",
     ratio: "3 / 2",
-    src: "/images/homepage/hero/hero.jpg",
+    // Requested homepage hero — GRP sectional tank on its concrete plinth.
+    src: "/images/products/grp-tanks/3d5d34e3-aa0e-4852-b971-69516c242d98.JPG",
   },
   productGrp: {
     id: "productGrp",
@@ -57,7 +58,7 @@ export const imageSlots = {
     alt: "Pipeco pressed steel sectional water tank",
     ratio: "4 / 3",
     // → /public/images/products/pressed-steel-tanks/
-    src: "/images/products/pressed-steel-tanks/image2.png",
+    src: "/images/products/pressed-steel-tanks/image6.png",
   },
   productStainless: {
     id: "productStainless",

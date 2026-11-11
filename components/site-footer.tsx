@@ -4,19 +4,43 @@ import { Facebook, Instagram } from "lucide-react";
 
 import Container from "@/components/layout/container";
 import { siteConfig } from "@/config/site-config";
-import { navLinks } from "@/config/navigation-config";
 
 const telHref = `tel:${siteConfig.phone.replace(/\s/g, "")}`;
 const waHref = `https://wa.me/${siteConfig.whatsapp}`;
 
+// Grouped footer navigation — mirrors the site architecture for discoverability.
+const columns: { heading: string; links: { label: string; href: string }[] }[] = [
+  {
+    heading: "Products",
+    links: [
+      { label: "GRP sectional tanks", href: "/products/grp-tanks" },
+      { label: "Pressed steel tanks", href: "/products/pressed-steel-tanks" },
+      { label: "Stainless steel tanks", href: "/products/stainless-steel-tanks" },
+      { label: "All products", href: "/products" },
+    ],
+  },
+  {
+    heading: "Solutions",
+    links: [
+      { label: "Turnkey installations", href: "/solutions/turnkey-installations" },
+      { label: "Mining refuge chambers", href: "/solutions/mining-refuge-chambers" },
+      { label: "All solutions", href: "/solutions" },
+    ],
+  },
+  {
+    heading: "Company",
+    links: [
+      { label: "Industries", href: "/industries" },
+      { label: "Projects", href: "/projects" },
+      { label: "About", href: "/about" },
+      { label: "Contact", href: "/contact" },
+    ],
+  },
+];
+
 // Legal documents exist (per onboarding) but their pages are not built yet, so
 // these are shown as plain labels — not links — to avoid broken navigation.
-const legalItems = [
-  "Privacy Policy",
-  "POPIA Policy",
-  "Terms & Conditions",
-  "Disclaimer",
-];
+const legalItems = ["Privacy Policy", "POPIA Policy", "Terms & Conditions", "Disclaimer"];
 
 export default function SiteFooter() {
   const year = new Date().getFullYear();
@@ -24,9 +48,9 @@ export default function SiteFooter() {
   return (
     <footer className="bg-forest-deepest text-white">
       <Container className="py-16 md:py-20">
-        <div className="grid gap-12 md:grid-cols-12 md:gap-10">
+        <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           {/* Brand */}
-          <div className="md:col-span-5">
+          <div className="lg:col-span-4">
             <Link href="/" aria-label={`${siteConfig.businessName} — home`}>
               <Image
                 src="/brand/pipeco-logo.png"
@@ -63,31 +87,33 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          {/* Explore */}
-          <nav aria-label="Footer" className="md:col-span-3">
-            <h2 className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-white/50">
-              Explore
-            </h2>
-            <ul className="mt-5 space-y-3">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="font-body text-white/75 transition-colors hover:text-brass-light"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+          {/* Link columns */}
+          {columns.map((col) => (
+            <nav key={col.heading} aria-label={col.heading} className="lg:col-span-2">
+              <h2 className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-white/50">
+                {col.heading}
+              </h2>
+              <ul className="mt-5 space-y-3">
+                {col.links.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="font-body text-sm text-white/75 transition-colors hover:text-brass-light"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
 
           {/* Contact */}
-          <div className="md:col-span-4">
+          <div className="lg:col-span-2">
             <h2 className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-white/50">
               Contact
             </h2>
-            <ul className="mt-5 space-y-3 font-body text-white/75">
+            <ul className="mt-5 space-y-3 font-body text-sm text-white/75">
               <li>
                 <a href={telHref} className="transition-colors hover:text-brass-light">
                   {siteConfig.phoneDisplay}
@@ -108,7 +134,7 @@ export default function SiteFooter() {
                   rel="noopener noreferrer"
                   className="transition-colors hover:text-brass-light"
                 >
-                  WhatsApp {siteConfig.phoneDisplay}
+                  WhatsApp us
                 </a>
               </li>
               <li className="pt-2 text-white/55">

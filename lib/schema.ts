@@ -40,3 +40,76 @@ export function organizationSchema() {
     sameAs: [siteConfig.social.facebook, siteConfig.social.instagram],
   };
 }
+
+const abs = (path: string) =>
+  path === "/" ? siteConfig.website : `${siteConfig.website}${path}`;
+
+/** BreadcrumbList for an interior page. */
+export function breadcrumbSchema(items: { name: string; path: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: item.name,
+      item: abs(item.path),
+    })),
+  };
+}
+
+/**
+ * Product schema — brand and category only. No price, rating, SKU or
+ * specification is asserted, since those are not verified.
+ */
+export function productSchema(p: {
+  name: string;
+  description: string;
+  image: string;
+  path: string;
+  category?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: p.name,
+    description: p.description,
+    image: abs(p.image),
+    url: abs(p.path),
+    category: p.category ?? "Sectional water tanks",
+    brand: { "@type": "Brand", name: "Pipeco" },
+    // No price, availability, rating or SKU — none is verified. Enquiries are
+    // quoted per project.
+  };
+}
+
+/** Service schema for a solution/capability page. */
+export function serviceSchema(s: { name: string; description: string; path: string; serviceType?: string }) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: s.name,
+    description: s.description,
+    url: abs(s.path),
+    serviceType: s.serviceType ?? s.name,
+    areaServed: { "@type": "Country", name: "South Africa" },
+    provider: {
+      "@type": "Organization",
+      name: siteConfig.businessName,
+      url: siteConfig.website,
+    },
+  };
+}
+
+/** FAQPage schema from question/answer pairs. */
+export function faqSchema(items: { q: string; a: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.q,
+      acceptedAnswer: { "@type": "Answer", text: item.a },
+    })),
+  };
+}
