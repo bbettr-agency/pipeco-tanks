@@ -36,6 +36,7 @@ const config: Config = {
         // Ink + surfaces
         ink: "#0C1A17", // near-black with a green cast — body text on light
         graphite: "#44534E", // muted body text on light
+        offwhite: "#FAFAF7", // bright off-white — refined neutral grounds
         paper: "#F4F6F2", // warm off-white — primary light surface
         shell: "#EAEEE8", // deeper off-white — section rhythm on light
       },
@@ -57,6 +58,15 @@ const config: Config = {
       },
       transitionTimingFunction: {
         house: "cubic-bezier(0.22, 1, 0.36, 1)",
+      },
+      keyframes: {
+        stepIn: {
+          "0%": { opacity: "0", transform: "translateY(6px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        stepIn: "stepIn 240ms cubic-bezier(0.22, 1, 0.36, 1)",
       },
     },
   },

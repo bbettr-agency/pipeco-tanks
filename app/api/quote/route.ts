@@ -4,6 +4,7 @@ import {
   HONEYPOT_FIELD,
   WEBHOOK_ENV_VAR,
   tankTypeValues,
+  solutionTypeValues,
 } from "@/config/quote-config";
 
 export const runtime = "nodejs";
@@ -53,22 +54,25 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: true });
   }
 
+  // Solution is optional context from a solution-page CTA. Only accept a known
+  // value; anything else is dropped rather than forwarded.
+  const solutionRaw = clean(raw?.solution, 60);
+  const solution = solutionTypeValues.includes(solutionRaw) ? solutionRaw : "";
+
   const data = {
     name: clean(raw?.name, FIELD_LIMITS.name),
-    company: clean(raw?.company, FIELD_LIMITS.company),
     email: clean(raw?.email, FIELD_LIMITS.email),
     phone: clean(raw?.phone, FIELD_LIMITS.phone),
     tankType: clean(raw?.tankType, 40),
     location: clean(raw?.location, FIELD_LIMITS.location),
     requirements: clean(raw?.requirements, FIELD_LIMITS.requirements),
     capacity: clean(raw?.capacity, FIELD_LIMITS.capacity),
-    application: clean(raw?.application, FIELD_LIMITS.application),
+    solution,
     consent: raw?.consent === true || raw?.consent === "true",
   };
 
   const fields: string[] = [];
   if (!data.name) fields.push("name");
-  if (!data.company) fields.push("company");
   if (!EMAIL_RE.test(data.email)) fields.push("email");
   if (!data.phone) fields.push("phone");
   if (!tankTypeValues.includes(data.tankType)) fields.push("tankType");

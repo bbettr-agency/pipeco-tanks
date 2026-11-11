@@ -15,16 +15,36 @@ export type TankTypeValue = (typeof tankTypes)[number]["value"];
 
 export const tankTypeValues = tankTypes.map((t) => t.value) as string[];
 
+export function tankTypeLabel(value: string): string {
+  return tankTypes.find((t) => t.value === value)?.label ?? "";
+}
+
+/**
+ * Solution context — carried from solution-page CTAs (e.g. /contact?solution=…).
+ * A solution is NOT a tank type: it is the kind of project the enquiry is about,
+ * recorded alongside the chosen tank type rather than in place of it.
+ */
+export const solutionTypes = [
+  { value: "turnkey-installations", label: "Turnkey installation" },
+  { value: "mining-refuge-chambers", label: "Mining refuge chamber" },
+] as const;
+
+export type SolutionTypeValue = (typeof solutionTypes)[number]["value"];
+
+export const solutionTypeValues = solutionTypes.map((s) => s.value) as string[];
+
+export function solutionLabel(value: string): string {
+  return solutionTypes.find((s) => s.value === value)?.label ?? "";
+}
+
 /** Field length ceilings, enforced on both client and server. */
 export const FIELD_LIMITS = {
   name: 120,
-  company: 160,
   email: 200,
   phone: 40,
   location: 200,
   requirements: 4000,
   capacity: 40,
-  application: 200,
 } as const;
 
 /** The env var that must hold the destination webhook URL (server-side only). */
