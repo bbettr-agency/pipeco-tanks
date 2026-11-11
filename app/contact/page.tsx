@@ -37,7 +37,7 @@ const details = [
 const include = [
   "Tank type (or ask us to recommend one)",
   "Required capacity, if known",
-  "Application — potable, process, fire, irrigation…",
+  "Intended use — potable, process, fire, irrigation…",
   "Site location and any access constraints",
 ];
 
@@ -62,11 +62,11 @@ export default function ContactPage() {
         ]}
       />
 
-      <section className="bg-mint">
+      <section className="bg-offwhite">
         <Container className="py-20 md:py-28">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
             {/* Direct contact + guidance */}
-            <Reveal className="lg:col-span-5">
+            <Reveal className="min-w-0 lg:col-span-5">
               <h2 className="font-display text-2xl font-bold tracking-tight text-forest-base">
                 Talk to our team
               </h2>
@@ -117,7 +117,7 @@ export default function ContactPage() {
               </ul>
 
               {/* What to include */}
-              <div className="mt-10 rounded-[16px] border border-forest-base/15 bg-white/70 p-6">
+              <div className="mt-10 rounded-[10px] border border-forest-base/12 bg-white p-6">
                 <h3 className="font-display text-sm font-semibold uppercase tracking-[0.14em] text-forest-muted">
                   What to include
                 </h3>
@@ -139,7 +139,7 @@ export default function ContactPage() {
             </Reveal>
 
             {/* Quote form */}
-            <Reveal className="lg:col-span-7" delay={0.05}>
+            <Reveal className="min-w-0 lg:col-span-7" delay={0.05}>
               <Suspense
                 fallback={
                   <div className="min-h-[520px] rounded-[3px] border border-forest-base/15 bg-white" />

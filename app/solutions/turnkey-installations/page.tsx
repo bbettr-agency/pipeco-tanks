@@ -77,7 +77,12 @@ export default function TurnkeyPage() {
           { label: "Turnkey installations", href: "/solutions/turnkey-installations" },
         ]}
       >
-        <Button href="/contact" variant="primary" size="lg" withArrow>
+        <Button
+          href="/contact?solution=turnkey-installations"
+          variant="primary"
+          size="lg"
+          withArrow
+        >
           Request a turnkey solution
         </Button>
       </PageHero>
