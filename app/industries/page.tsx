@@ -12,7 +12,6 @@ import { Reveal, Stagger } from "@/engine/motion";
 import { createMetadata } from "@/lib/metadata";
 import { breadcrumbSchema } from "@/lib/schema";
 import { industries } from "@/config/industries-config";
-import { imageSlots } from "@/config/image-config";
 
 export const metadata: Metadata = createMetadata({
   title: "Industries & Applications",
@@ -32,11 +31,14 @@ export default function IndustriesPage() {
       />
 
       <PageHero
-        variant="photo"
+        variant="split"
         overline="Industries & applications"
         title="Where Pipeco tanks are put to work."
         lead="Sectional water storage scales from a single rooftop reserve to bulk municipal and mining supply. These are the sectors our tanks and turnkey solutions are built for."
-        media={{ slot: imageSlots.hero }}
+        media={{
+          src: "/images/products/grp-tanks/1e7d5b8b-5286-4e2f-bc02-54eaa63b288b.JPG",
+          alt: "Large Pipeco GRP sectional water tank array supplying bulk storage",
+        }}
         focus="center 55%"
         breadcrumb={[
           { label: "Home", href: "/" },

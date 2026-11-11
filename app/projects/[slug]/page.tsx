@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 import Container from "@/components/layout/container";
 import PageHero from "@/components/layout/page-hero";
-import Placeholder from "@/components/ui/placeholder";
 import SectionIntro from "@/components/ui/section-intro";
 import Button from "@/components/ui/button";
 import CtaBand from "@/components/sections/cta-band";
@@ -56,11 +56,15 @@ export default function ProjectDetailPage({ params }: { params: Params }) {
       />
 
       <PageHero
-        variant={project.images[0]?.src ? "photo" : "band"}
+        variant={project.images[0] ? "photo" : "band"}
         overline="Project"
         title={project.title}
         lead={project.summary}
-        media={project.images[0] ? { slot: project.images[0] } : undefined}
+        media={
+          project.images[0]
+            ? { src: project.images[0], alt: project.title }
+            : undefined
+        }
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: "Projects", href: "/projects" },
@@ -98,15 +102,17 @@ export default function ProjectDetailPage({ params }: { params: Params }) {
               <SectionIntro overline="Gallery" title="On site." />
             </Reveal>
             <div className="mt-10 grid gap-6 sm:grid-cols-2">
-              {project.images.map((slot) => (
-                <Reveal key={slot.id}>
-                  <Placeholder
-                    slot={slot}
-                    tone="onLight"
-                    variant="minimal"
-                    sizes="(min-width: 640px) 46vw, 100vw"
-                    className="w-full overflow-hidden rounded-[16px] border border-ink/10"
-                  />
+              {project.images.map((src) => (
+                <Reveal key={src}>
+                  <div className="relative aspect-[4/3] w-full overflow-hidden rounded-[16px] border border-ink/10">
+                    <Image
+                      src={src}
+                      alt={project.title}
+                      fill
+                      sizes="(min-width: 640px) 46vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
                 </Reveal>
               ))}
             </div>

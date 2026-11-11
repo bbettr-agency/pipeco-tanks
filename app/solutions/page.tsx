@@ -31,7 +31,7 @@ export default function SolutionsPage() {
       />
 
       <PageHero
-        variant="photo"
+        variant="split"
         overline="Turnkey water storage"
         title="More than a tank. A complete solution."
         lead="Pipeco delivers the whole water storage installation — foundations, stands, tank and commissioning — plus specialised sectional steel refuge chambers for mining."

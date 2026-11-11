@@ -51,8 +51,11 @@ export default function ProductsPage() {
           </>
         }
         lead="GRP, pressed steel and stainless steel panel tanks — supplied and installed across South Africa with complete turnkey water storage."
-        media={{ slot: imageSlots.productGrp }}
-        focus="center 60%"
+        media={{
+          src: "/images/products/grp-tanks/grp-tank-plinth.jpeg",
+          alt: "Pipeco GRP sectional water tank on a concrete plinth",
+        }}
+        focus="center 50%"
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: "Products", href: "/products" },

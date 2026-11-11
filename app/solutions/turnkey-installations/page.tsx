@@ -66,7 +66,11 @@ export default function TurnkeyPage() {
         overline="Turnkey water storage"
         title="Foundations, stands and tank — installed as one."
         lead="Pipeco takes responsibility for the whole installation, so there's no gap between a tank supplier and a civil contractor on your site."
-        media={{ slot: imageSlots.install3 }}
+        media={{
+          src: "/images/projects/completed-installations/install-elevated-crane.jpeg",
+          alt: "Sectional water tank lifted onto an elevated steel tower by crane during a Pipeco installation",
+        }}
+        focus="center 40%"
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: "Solutions", href: "/solutions" },
@@ -127,7 +131,10 @@ export default function TurnkeyPage() {
       <FeatureSplit
         overline="Elevated steel stands"
         title="Raised, gravity-fed storage."
-        media={{ slot: imageSlots.productSteel }}
+        media={{
+          src: "/images/products/pressed-steel-tanks/image9.png",
+          alt: "Pipeco sectional water tank on an elevated steel stand",
+        }}
         reverse
         tone="dark"
       >

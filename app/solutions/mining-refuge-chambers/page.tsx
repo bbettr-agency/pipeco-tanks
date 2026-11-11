@@ -80,7 +80,7 @@ export default function RefugeChambersPage() {
       />
 
       <PageHero
-        variant="photo"
+        variant="split"
         overline="A Pipeco specialisation"
         title="Underground mining refuge chambers."
         lead="Sectional steel refuge chambers, engineered and built into mining operations — a sealed, structurally sound place for crews to shelter in an emergency underground."

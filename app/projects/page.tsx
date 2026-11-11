@@ -10,7 +10,6 @@ import Portfolio from "@/components/projects/portfolio";
 import { Reveal } from "@/engine/motion";
 import { createMetadata } from "@/lib/metadata";
 import { breadcrumbSchema } from "@/lib/schema";
-import { imageSlots } from "@/config/image-config";
 
 export const metadata: Metadata = createMetadata({
   title: "Projects",
@@ -30,12 +29,15 @@ export default function ProjectsPage() {
       />
 
       <PageHero
-        variant="photo"
+        variant="split"
         overline="Selected installations"
         title="Water storage, delivered on the ground."
         lead="A selection of sectional water storage work across South Africa — supplied and installed by Pipeco, from civil foundations to the finished tank."
-        media={{ slot: imageSlots.install3 }}
-        focus="center 60%"
+        media={{
+          src: "/images/projects/completed-installations/install-elevated-crane.jpeg",
+          alt: "Sectional water tank lifted onto an elevated steel tower by crane during a Pipeco installation",
+        }}
+        focus="center 40%"
         breadcrumb={[
           { label: "Home", href: "/" },
           { label: "Projects", href: "/projects" },

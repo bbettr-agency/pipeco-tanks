@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 
 import Container from "@/components/layout/container";
 import PageHero from "@/components/layout/page-hero";
 import FeatureSplit from "@/components/sections/feature-split";
+import ProductGallery from "@/components/sections/product-gallery";
 import RelatedCards from "@/components/sections/related-cards";
 import SectionIntro from "@/components/ui/section-intro";
 import Button from "@/components/ui/button";
@@ -61,7 +61,7 @@ export default function ProductPage({ params }: { params: Params }) {
           productSchema({
             name: product.name,
             description: content?.tagline ?? product.lede,
-            image: feature.src ?? "",
+            image: product.heroImage,
             path: `/products/${product.pageSlug}`,
           }),
           ...(content ? [faqSchema(content.faqs)] : []),
@@ -69,11 +69,11 @@ export default function ProductPage({ params }: { params: Params }) {
       />
 
       <PageHero
-        variant="photo"
+        variant="split"
         overline={`Sectional range · ${product.index}`}
         title={product.name}
         lead={content?.tagline ?? product.lede}
-        media={{ slot: feature }}
+        media={{ src: product.heroImage, alt: feature.alt }}
         focus={content?.heroFocus}
         breadcrumb={[
           { label: "Home", href: "/" },
@@ -130,33 +130,7 @@ export default function ProductPage({ params }: { params: Params }) {
       </section>
 
       {/* Gallery */}
-      {product.gallery.length > 0 && (
-        <section className="bg-shell">
-          <Container className="py-20 md:py-28">
-            <Reveal>
-              <SectionIntro
-                overline="Gallery"
-                title={`${product.shortName} tanks in the field.`}
-              />
-            </Reveal>
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {product.gallery.map((src, i) => (
-                <Reveal key={src} delay={(i % 3) * 0.05}>
-                  <div className="group relative aspect-[4/3] w-full overflow-hidden rounded-[16px] border border-ink/10">
-                    <Image
-                      src={src}
-                      alt={`Pipeco ${product.shortName.toLowerCase()} sectional water tank`}
-                      fill
-                      sizes="(min-width: 1024px) 30vw, (min-width: 640px) 46vw, 100vw"
-                      className="object-cover transition-transform duration-700 ease-house group-hover:scale-[1.04]"
-                    />
-                  </div>
-                </Reveal>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
+      <ProductGallery images={product.gallery} title={product.shortName} />
 
       {/* Applications & industries */}
       <section id="applications" className="bg-forest-deepest text-white scroll-mt-24">
@@ -198,7 +172,7 @@ export default function ProductPage({ params }: { params: Params }) {
       <FeatureSplit
         overline="Turnkey delivery"
         title="Supplied and installed by one team."
-        media={{ slot: imageSlots.capabilities }}
+        media={{ src: product.turnkeyImage, alt: product.turnkeyAlt }}
         reverse
       >
         <p>

@@ -42,22 +42,27 @@ export const applications = [
   {
     name: "Mining",
     note: "Bulk process and potable water, plus specialised underground refuge chambers for active sites.",
+    href: "/solutions/mining-refuge-chambers",
   },
   {
     name: "Commercial & industrial",
     note: "Process, cooling, wash-down and potable storage for plants, factories and developments.",
+    href: "/industries",
   },
   {
     name: "Infrastructure & municipal",
     note: "Reservoirs and bulk storage for water schemes, towns and public infrastructure.",
+    href: "/industries",
   },
   {
     name: "Fire-water storage",
     note: "Dedicated fire-reserve tanks, sized to your fire design.",
+    href: "/products/pressed-steel-tanks",
   },
   {
     name: "Agriculture",
     note: "Irrigation reserves and livestock water storage.",
+    href: "/industries",
   },
 ] as const;
 
