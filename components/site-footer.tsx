@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Facebook, Instagram } from "lucide-react";
 
 import Container from "@/components/layout/container";
+import { CookiePreferences } from "@/components/analytics/consent";
 import { siteConfig } from "@/config/site-config";
 
 const telHref = `tel:${siteConfig.phone.replace(/\s/g, "")}`;
@@ -156,6 +157,9 @@ export default function SiteFooter() {
                 {item}
               </li>
             ))}
+            <li>
+              <CookiePreferences className="text-white/45 underline-offset-4 transition-colors hover:text-brass-light hover:underline focus:outline-none focus-visible:text-brass-light" />
+            </li>
           </ul>
           <p>
             Designed &amp; developed by{" "}

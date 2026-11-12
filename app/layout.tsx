@@ -1,5 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Archivo, IBM_Plex_Sans } from "next/font/google";
 
 import { createMetadata } from "@/lib/metadata";
@@ -7,6 +8,8 @@ import { organizationSchema } from "@/lib/schema";
 import { MotionProvider, NOSCRIPT_FALLBACK } from "@/engine/motion";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
+import { ConsentProvider } from "@/components/analytics/consent";
+import MetaPixel from "@/components/analytics/meta-pixel";
 
 const display = Archivo({
   subsets: ["latin"],
@@ -48,11 +51,16 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-white text-ink antialiased">
-        <MotionProvider>
-          <SiteHeader />
-          {children}
-          <SiteFooter />
-        </MotionProvider>
+        <ConsentProvider>
+          <MotionProvider>
+            <SiteHeader />
+            {children}
+            <SiteFooter />
+          </MotionProvider>
+          <Suspense fallback={null}>
+            <MetaPixel />
+          </Suspense>
+        </ConsentProvider>
       </body>
     </html>
   );
