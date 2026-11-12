@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { Archivo, IBM_Plex_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 
 import { createMetadata } from "@/lib/metadata";
 import { organizationSchema } from "@/lib/schema";
@@ -61,6 +62,7 @@ export default function RootLayout({
             <MetaPixel />
           </Suspense>
         </ConsentProvider>
+        <Analytics />
       </body>
     </html>
   );
