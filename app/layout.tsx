@@ -36,7 +36,6 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <link rel="icon" href="/brand/pipeco-logo.png" />
         <meta name="theme-color" content="#051F20" />
         <noscript>
           <style>{NOSCRIPT_FALLBACK}</style>

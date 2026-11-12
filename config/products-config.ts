@@ -125,11 +125,11 @@ export const products: Product[] = [
     tankType: "stainless",
     enquiryHref: "/?tank=stainless#contact",
     pageSlug: "stainless-steel-tanks",
-    // NOTE: this is the only "stainless" photograph supplied, and it reads as a
-    // galvanised pressed-steel hydrant tank — flagged for client verification.
-    // Kept as the client's designated stainless product image; not reused as a
-    // classified portfolio entry elsewhere.
-    heroImage: "/images/products/stainless-steel-tanks/stainless-steel-sectional-tank.jpeg",
+    // No verified stainless-steel photograph exists (the only supplied image
+    // depicts a galvanised pressed-steel hydrant tank and must not be presented
+    // as stainless). Empty heroImage → the page hero renders a premium text-led
+    // band. Add a genuine stainless photo path here to switch it on.
+    heroImage: "",
     turnkeyImage: "/images/projects/completed-installations/install-steelworks.jpeg",
     turnkeyAlt: "Structural steelworks for a sectional water reservoir during a Pipeco installation",
     // No separate gallery on this page — the client's designated stainless

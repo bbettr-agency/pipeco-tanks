@@ -84,45 +84,32 @@ export default function Placeholder({
     );
   }
 
-  // Clean, neutral container — no grid, no corner ticks. For product images.
+  // Premium text-led panel — shown when a range has no verified photograph yet
+  // (e.g. stainless steel). Deliberately on-brand, not an "image pending" box.
   if (variant === "minimal") {
     return (
       <div
         role="img"
-        aria-label={`Placeholder: ${slot.alt}`}
+        aria-label={slot.alt}
         className={cn(
-          "flex items-center justify-center",
+          "relative flex flex-col items-center justify-center bg-forest-deepest px-8 text-center text-white",
           frame,
-          dark ? "bg-forest-dark" : "bg-shell",
           className
         )}
         style={frameStyle}
       >
-        <div className="flex flex-col items-center gap-2.5 px-6 text-center">
-          <ImageIcon
-            className={cn(
-              "h-5 w-5",
-              dark ? "text-sage/70" : "text-forest-base/45"
-            )}
-            strokeWidth={1.5}
-          />
-          <span
-            className={cn(
-              "font-display text-[11px] font-semibold uppercase tracking-[0.18em]",
-              dark ? "text-sage/80" : "text-forest-base/70"
-            )}
-          >
-            {slot.label}
-          </span>
-          <span
-            className={cn(
-              "font-body text-[11px]",
-              dark ? "text-white/40" : "text-graphite/60"
-            )}
-          >
-            Image to be supplied by PIPECO
-          </span>
-        </div>
+        <span
+          aria-hidden
+          className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full opacity-[0.14] blur-3xl"
+          style={{ background: "radial-gradient(circle, #B4895A 0%, transparent 70%)" }}
+        />
+        <span aria-hidden className="h-px w-10 bg-brass" />
+        <span className="mt-5 font-display text-lg font-semibold tracking-tight">
+          {slot.alt}
+        </span>
+        <span className="mt-2 max-w-xs font-body text-sm leading-6 text-white/55">
+          Grade, finish and capacity confirmed with Pipeco for your project.
+        </span>
       </div>
     );
   }

@@ -12,9 +12,10 @@ export const siteConfig = {
   // Positioning line — qualitative, no unverified numeric claims.
   tagline: "Sectional water tank supplier and installer",
 
-  // Provisional canonical. Domain cut-over is an open decision — the existing
-  // WordPress site on pipecoza.com must not be touched.
-  website: "https://www.pipecoza.com",
+  // Canonical domain = apex (no www). www redirects to apex (see next.config.js).
+  // Domain cut-over is handled at DNS/Vercel; the existing WordPress site and
+  // Microsoft 365 email records must not be touched.
+  website: "https://pipecoza.com",
 
   // Verified contact details (onboarding form)
   phone: "+27 60 969 8151",

@@ -60,7 +60,7 @@ export default function AboutPage() {
           manufacturer.
         </p>
         <p>
-          Backed by more than 20 years of sectional water tank experience, our
+          Backed by extensive sectional water tank experience, our
           teams deliver the complete turnkey solution: the civil foundations the
           tank sits on, the elevated steel stands for gravity-fed storage, and the
           on-site assembly, sealing and commissioning.

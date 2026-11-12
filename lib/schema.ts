@@ -65,7 +65,8 @@ export function breadcrumbSchema(items: { name: string; path: string }[]) {
 export function productSchema(p: {
   name: string;
   description: string;
-  image: string;
+  /** Optional — omitted when no verified product photograph exists. */
+  image?: string;
   path: string;
   category?: string;
 }) {
@@ -74,7 +75,7 @@ export function productSchema(p: {
     "@type": "Product",
     name: p.name,
     description: p.description,
-    image: abs(p.image),
+    ...(p.image ? { image: abs(p.image) } : {}),
     url: abs(p.path),
     category: p.category ?? "Sectional water tanks",
     brand: { "@type": "Brand", name: "Pipeco" },

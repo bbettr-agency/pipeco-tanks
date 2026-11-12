@@ -6,8 +6,8 @@ import { whyPoints } from "@/config/homepage-config";
 /**
  * E — Why PIPECO.
  * Genuine, verified differentiators. Editorial two-column layout (statement +
- * numbered list), not a three-card grid. No invented stats or certifications.
- * The "more than 20 years" line is onboarding-stated.
+ * numbered list), not a three-card grid. No invented stats or certifications —
+ * experience is described qualitatively (no unverified year count).
  */
 export default function WhyPipeco() {
   return (
@@ -19,7 +19,7 @@ export default function WhyPipeco() {
               tone="dark"
               overline="Why Pipeco"
               title="Water storage you only buy once."
-              description="Backed by more than 20 years of sectional water tank experience, Pipeco supplies internationally manufactured tanks and delivers the complete turnkey solution – from the foundation to the final panel."
+              description="Backed by extensive sectional water tank experience, Pipeco supplies internationally manufactured tanks and delivers the complete turnkey solution – from the foundation to the final panel."
             />
           </Reveal>
 
