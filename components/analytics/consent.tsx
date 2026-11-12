@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   createContext,
   useCallback,
@@ -103,7 +104,14 @@ function ConsentBanner({
         <p className="max-w-2xl font-body text-sm leading-6 text-white/80">
           We use cookies to measure quotation enquiries and for advertising
           (including the Meta Pixel). These are only set if you accept — the site
-          and the quote form work either way.
+          and the quote form work either way. See our{" "}
+          <Link
+            href="/privacy-policy"
+            className="font-medium text-brass-light underline underline-offset-4 hover:text-white"
+          >
+            Privacy &amp; Cookie Policy
+          </Link>
+          .
         </p>
         <div className="flex shrink-0 gap-3">
           <button

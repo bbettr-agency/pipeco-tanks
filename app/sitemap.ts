@@ -37,6 +37,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     { path: "/about", priority: 0.6, changeFrequency: "yearly" },
     { path: "/contact", priority: 0.8, changeFrequency: "yearly" },
+    { path: "/privacy-policy", priority: 0.2, changeFrequency: "yearly" },
   ];
 
   return entries.map(({ path, priority, changeFrequency }) => ({

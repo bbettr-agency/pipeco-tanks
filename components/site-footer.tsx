@@ -39,9 +39,15 @@ const columns: { heading: string; links: { label: string; href: string }[] }[] =
   },
 ];
 
-// Legal documents exist (per onboarding) but their pages are not built yet, so
-// these are shown as plain labels — not links — to avoid broken navigation.
-const legalItems = ["Privacy Policy", "POPIA Policy", "Terms & Conditions", "Disclaimer"];
+// Privacy & Cookie Policy is published (/privacy-policy, with a POPIA section).
+// Terms & Disclaimer pages are not built yet, so they remain plain labels to
+// avoid broken navigation.
+const legalItems: { label: string; href?: string }[] = [
+  { label: "Privacy Policy", href: "/privacy-policy" },
+  { label: "POPIA Policy", href: "/privacy-policy#popia" },
+  { label: "Terms & Conditions" },
+  { label: "Disclaimer" },
+];
 
 export default function SiteFooter() {
   const year = new Date().getFullYear();
@@ -153,8 +159,17 @@ export default function SiteFooter() {
           </p>
           <ul className="flex flex-wrap items-center gap-x-5 gap-y-2">
             {legalItems.map((item) => (
-              <li key={item} className="text-white/45">
-                {item}
+              <li key={item.label} className="text-white/45">
+                {item.href ? (
+                  <Link
+                    href={item.href}
+                    className="underline-offset-4 transition-colors hover:text-brass-light hover:underline"
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  item.label
+                )}
               </li>
             ))}
             <li>
