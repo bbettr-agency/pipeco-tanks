@@ -52,6 +52,10 @@ export function loadPixel(): void {
   script.src = "https://connect.facebook.net/en_US/fbevents.js";
   document.head.appendChild(script);
 
+  // Disable Automatic Advanced Matching and automatic event/data scraping so
+  // the Pixel never hashes and sends form-field values (email/phone/name). Only
+  // the explicit PageView and Lead events we fire are ever sent.
+  window.fbq("set", "autoConfig", false, analyticsConfig.metaPixelId);
   window.fbq("init", analyticsConfig.metaPixelId);
 }
 
