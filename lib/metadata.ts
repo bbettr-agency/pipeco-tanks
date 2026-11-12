@@ -6,6 +6,8 @@ type CreateMetadataOptions = {
   title?: string;
   description?: string;
   path?: string;
+  /** Keep the page out of search indexes (e.g. the Thank You page). */
+  noindex?: boolean;
 };
 
 /**
@@ -28,7 +30,7 @@ export function createMetadata(options: CreateMetadataOptions = {}): Metadata {
     description,
     keywords: [...seoConfig.keywords],
     authors: [{ name: seoConfig.author }],
-    robots: seoConfig.robots,
+    robots: options.noindex ? { index: false, follow: false } : seoConfig.robots,
     alternates: { canonical: url },
     openGraph: {
       title,

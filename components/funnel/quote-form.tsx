@@ -8,7 +8,7 @@ import {
   type FormEvent,
   type ReactNode,
 } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowLeft, ArrowRight, Check, Loader2, Pencil } from "lucide-react";
 
 import {
@@ -20,7 +20,6 @@ import {
   FIELD_LIMITS,
   HONEYPOT_FIELD,
 } from "@/config/quote-config";
-import { siteConfig } from "@/config/site-config";
 import { cn } from "@/utils/cn";
 
 type Values = {
@@ -115,9 +114,8 @@ function stepOfField(key: FieldKey): number {
   return STEPS.findIndex((s) => s.fields.includes(key));
 }
 
-const waHref = `https://wa.me/${siteConfig.whatsapp}`;
-
 export default function QuoteForm() {
+  const router = useRouter();
   const searchParams = useSearchParams();
   const formRef = useRef<HTMLFormElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -189,7 +187,9 @@ export default function QuoteForm() {
 
   async function onSubmit(ev: FormEvent<HTMLFormElement>) {
     ev.preventDefault();
-    if (status === "submitting") return; // guard against duplicate submits
+    // Guard against duplicate submits and against re-submitting during the
+    // post-success redirect.
+    if (status === "submitting" || status === "success") return;
 
     // Intermediate steps: validate this step, then advance.
     if (step < LAST) {
@@ -236,7 +236,24 @@ export default function QuoteForm() {
 
       // Only celebrate when the server confirms the enquiry was delivered.
       if (res.ok && payload?.ok) {
+        // Stash a one-time, non-PII conversion signal for the /thank-you page
+        // to emit a single generate_lead event. No name, email, phone or
+        // requirements text is included.
+        try {
+          sessionStorage.setItem(
+            "pipeco_lead",
+            JSON.stringify({
+              enquiry_id:
+                typeof payload.enquiryId === "string" ? payload.enquiryId : "",
+              tank_type: values.tankType,
+              form_source: window.location.pathname,
+            })
+          );
+        } catch {
+          /* sessionStorage unavailable — redirect still proceeds. */
+        }
         setStatus("success");
+        router.push("/thank-you");
         return;
       }
 
@@ -271,34 +288,31 @@ export default function QuoteForm() {
   }
 
   if (status === "success") {
+    // Enquiry confirmed by the server — briefly shown while redirecting to the
+    // /thank-you confirmation page. The link is a no-JS / slow-navigation
+    // fallback so the visitor is never stranded.
     return (
-      <div className="rounded-[4px] border border-forest-base/12 bg-white p-8 md:p-10">
+      <div
+        role="status"
+        aria-live="polite"
+        className="flex flex-col items-center rounded-[4px] border border-forest-base/12 bg-white p-8 text-center md:p-10"
+      >
         <span className="flex h-12 w-12 items-center justify-center rounded-full bg-forest-base text-white">
           <Check className="h-6 w-6" />
         </span>
         <h3 className="mt-5 font-display text-2xl font-bold tracking-tight text-forest-base">
-          Thank you — we’ve got your enquiry.
+          Enquiry received.
         </h3>
-        <p className="mt-3 font-body leading-7 text-ink/70">
-          Our team will review your requirements and come back to you with a
-          specification and quotation. Need us sooner? Message us on WhatsApp.
+        <p className="mt-3 flex items-center gap-2 font-body leading-7 text-ink/70">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Taking you to your confirmation…
         </p>
-        <div className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-body text-sm">
-          <a
-            href={waHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-forest-base underline-offset-4 hover:text-brass-dark hover:underline"
-          >
-            WhatsApp {siteConfig.phoneDisplay}
-          </a>
-          <a
-            href={`mailto:${siteConfig.email}`}
-            className="text-graphite underline-offset-4 hover:text-forest-base hover:underline"
-          >
-            {siteConfig.email}
-          </a>
-        </div>
+        <a
+          href="/thank-you"
+          className="mt-5 font-body text-sm font-semibold text-forest-base underline-offset-4 hover:text-brass-dark hover:underline"
+        >
+          Continue
+        </a>
       </div>
     );
   }

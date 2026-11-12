@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { randomUUID } from "crypto";
 import {
   FIELD_LIMITS,
   HONEYPOT_FIELD,
@@ -132,7 +133,9 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    return NextResponse.json({ ok: true });
+    // Genuine, server-confirmed submission: return a fresh non-PII enquiry id,
+    // used only as a one-time conversion signal on the /thank-you page.
+    return NextResponse.json({ ok: true, enquiryId: randomUUID() });
   } catch {
     // Network/timeout or unexpected error. Deliberately no PII logged.
     return NextResponse.json(
