@@ -65,11 +65,9 @@ export const imageSlots = {
     label: "STAINLESS STEEL WATER TANK IMAGE",
     alt: "Pipeco pressed stainless steel sectional water tank",
     ratio: "16 / 10",
-    // No verified stainless-steel photograph exists. The only supplied image
-    // depicts a galvanised pressed-steel hydrant tank, so it is NOT used here —
-    // the stainless range renders a premium text-led treatment instead. Add a
-    // genuine stainless photo path here to switch it on.
-    src: null,
+    // Stainless-steel sectional tank photograph — confirmed by PIPECO as a
+    // genuine stainless product and approved for use on the stainless range.
+    src: "/images/products/stainless-steel-tanks/stainless-steel-sectional-tank.jpeg",
   },
   capabilities: {
     id: "capabilities",

@@ -125,15 +125,13 @@ export const products: Product[] = [
     tankType: "stainless",
     enquiryHref: "/?tank=stainless#contact",
     pageSlug: "stainless-steel-tanks",
-    // No verified stainless-steel photograph exists (the only supplied image
-    // depicts a galvanised pressed-steel hydrant tank and must not be presented
-    // as stainless). Empty heroImage → the page hero renders a premium text-led
-    // band. Add a genuine stainless photo path here to switch it on.
-    heroImage: "",
+    // Stainless-steel sectional tank photograph — confirmed by PIPECO as a
+    // genuine stainless product and approved for the stainless range hero.
+    heroImage: "/images/products/stainless-steel-tanks/stainless-steel-sectional-tank.jpeg",
     turnkeyImage: "/images/projects/completed-installations/install-steelworks.jpeg",
     turnkeyAlt: "Structural steelworks for a sectional water reservoir during a Pipeco installation",
-    // No separate gallery on this page — the client's designated stainless
-    // photograph is shown in the /projects gallery instead.
+    // Only the one confirmed stainless photograph is supplied; it drives the
+    // hero above, so the detail-page gallery stays empty to avoid repetition.
     gallery: [],
   },
 ];

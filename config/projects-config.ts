@@ -12,9 +12,7 @@
  * Material classification notes:
  *   • GRP          — dimpled/pyramid GRP panels.
  *   • Pressed steel — X-embossed hot-dip galvanised steel panels.
- *   • Stainless     — no verified photograph supplied → empty state. The only
- *     supplied "stainless" image reads as a galvanised pressed-steel hydrant
- *     tank, so it is not shown at all rather than misrepresent the material.
+ *   • Stainless     — PIPECO-confirmed stainless sectional tank photograph.
  */
 export type ProjectCategory =
   | "GRP Sectional Tanks"
@@ -119,12 +117,13 @@ export const projects: Project[] = [
     src: "/images/projects/completed-installations/installation-2.jpeg",
     alt: "Concrete tank base and dwarf walls for a Pipeco installation",
   },
-  /* ---- Stainless Steel Tanks ----
-   * No verified stainless-steel photograph exists. The only supplied "stainless"
-   * image depicts a galvanised pressed-steel hydrant tank, so it is NOT shown
-   * here (presenting it as stainless would misrepresent the product). The
-   * Stainless Steel Tanks filter therefore renders a professional empty state
-   * until a genuine stainless photograph is confirmed. */
+  /* ---- Stainless Steel Tanks (PIPECO-confirmed stainless product) ---- */
+  {
+    caption: "Stainless steel sectional water tank",
+    category: "Stainless Steel Tanks",
+    src: "/images/products/stainless-steel-tanks/stainless-steel-sectional-tank.jpeg",
+    alt: "Pipeco stainless steel sectional water tank installation",
+  },
 ];
 
 /**
