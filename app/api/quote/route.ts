@@ -141,6 +141,11 @@ export async function POST(req: NextRequest) {
       : tankTypeLabel(data.tankType) || data.tankType,
     source: "PIPECO Website",
     enquiryId,
+    // YYYY-MM-DD (SA time) for GHL Date-type custom fields, e.g. Submission Date.
+    submissionDate: new Date().toLocaleDateString("en-CA", {
+      timeZone: "Africa/Johannesburg",
+    }),
+    // Human-readable, for the owner notification email.
     submittedAt: new Date().toLocaleString("en-ZA", {
       timeZone: "Africa/Johannesburg",
       dateStyle: "medium",
