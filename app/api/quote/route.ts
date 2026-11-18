@@ -9,17 +9,20 @@ import {
   solutionLabel,
   WEBHOOK_ENV_VAR,
 } from "@/config/quote-config";
-import { createEnquiry, ghlConfigured } from "@/lib/ghl";
 
-/** POST the enquiry to the GHL inbound webhook, if configured. Never throws. */
-async function notifyWebhook(payload: Record<string, string>): Promise<void> {
-  const url = process.env[WEBHOOK_ENV_VAR]?.trim();
-  if (!url) {
-    console.warn(`[quote] ${WEBHOOK_ENV_VAR} not set; owner notification skipped.`);
-    return;
-  }
+/**
+ * The ONLY destination for website leads: the PIPECO GHL inbound webhook.
+ * The GHL workflow behind it creates the contact/opportunity and emails the
+ * owner. `PIPECO_QUOTE_WEBHOOK_URL` can override it (e.g. for testing).
+ */
+const DEFAULT_WEBHOOK_URL =
+  "https://services.leadconnectorhq.com/hooks/TZCMRS21RVgbLGMKOOvx/webhook-trigger/22780aa3-578e-4228-b0f0-c63c8bb8ff36";
+
+/** POST the enquiry to the webhook. Returns true only on a 2xx. Never throws. */
+async function sendToWebhook(payload: Record<string, string>): Promise<boolean> {
+  const url = process.env[WEBHOOK_ENV_VAR]?.trim() || DEFAULT_WEBHOOK_URL;
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 8_000);
+  const timer = setTimeout(() => controller.abort(), 10_000);
   try {
     const res = await fetch(url, {
       method: "POST",
@@ -27,9 +30,11 @@ async function notifyWebhook(payload: Record<string, string>): Promise<void> {
       body: JSON.stringify(payload),
       signal: controller.signal,
     });
-    if (!res.ok) console.error(`[quote] Webhook notify failed (status ${res.status}).`);
+    if (!res.ok) console.error(`[quote] Webhook failed (status ${res.status}).`);
+    return res.ok;
   } catch {
-    console.error("[quote] Webhook notify failed (network/timeout).");
+    console.error("[quote] Webhook failed (network/timeout).");
+    return false;
   } finally {
     clearTimeout(timer);
   }
@@ -121,76 +126,30 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // Fail safe when the CRM token is not configured. Never pretend success and
-  // never silently drop a genuine enquiry.
-  if (!ghlConfigured()) {
-    return NextResponse.json(
-      {
-        error:
-          "Online enquiries aren’t switched on yet. Please email sales@pipecoza.com or WhatsApp us and we’ll respond right away.",
-        code: "not_configured",
-      },
-      { status: 503 }
-    );
-  }
+  const enquiryId = randomUUID();
+  const sent = await sendToWebhook({
+    name: data.name,
+    email: data.email,
+    phone: data.phone,
+    tankType: tankTypeLabel(data.tankType) || data.tankType,
+    capacity: data.capacity || "Not specified",
+    location: data.location,
+    requirements: data.requirements,
+    solution: data.solution ? solutionLabel(data.solution) : "",
+    enquiredFrom: data.solution
+      ? solutionLabel(data.solution)
+      : tankTypeLabel(data.tankType) || data.tankType,
+    source: "PIPECO Website",
+    enquiryId,
+    submittedAt: new Date().toLocaleString("en-ZA", {
+      timeZone: "Africa/Johannesburg",
+      dateStyle: "medium",
+      timeStyle: "short",
+    }),
+  });
 
-  try {
-    const result = await createEnquiry({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      tankType: data.tankType,
-      capacity: data.capacity,
-      location: data.location,
-      requirements: data.requirements,
-      solution: data.solution,
-      submittedAt: new Date().toISOString(),
-    });
-
-    // Only report success once the CRM confirms BOTH the contact and the
-    // opportunity. No token or PII is ever logged.
-    if (!result.ok) {
-      console.error(`[quote] GHL ${result.stage} step failed (status ${result.status}).`);
-      return NextResponse.json(
-        {
-          error:
-            "We couldn’t send your enquiry just now. Please try again, or email / WhatsApp us.",
-        },
-        { status: 502 }
-      );
-    }
-
-    const enquiryId = randomUUID();
-
-    // Notify the GHL inbound-webhook workflow (owner email alert). Best-effort:
-    // the lead is already safely in the CRM, so a webhook failure is logged
-    // (no PII) but never turns a saved enquiry into an error for the visitor.
-    await notifyWebhook({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      tankType: tankTypeLabel(data.tankType) || data.tankType,
-      capacity: data.capacity || "Not specified",
-      location: data.location,
-      requirements: data.requirements,
-      solution: data.solution ? solutionLabel(data.solution) : "",
-      enquiredFrom: data.solution
-        ? solutionLabel(data.solution)
-        : tankTypeLabel(data.tankType) || data.tankType,
-      source: "PIPECO Website",
-      enquiryId,
-      submittedAt: new Date().toLocaleString("en-ZA", {
-        timeZone: "Africa/Johannesburg",
-        dateStyle: "medium",
-        timeStyle: "short",
-      }),
-    });
-
-    // Genuine, server-confirmed submission: return a fresh non-PII enquiry id,
-    // used only as a one-time conversion signal on the /thank-you page.
-    return NextResponse.json({ ok: true, enquiryId });
-  } catch {
-    // Network/timeout or unexpected error. Deliberately no PII logged.
+  // Never pretend success: only confirm once the webhook accepted the lead.
+  if (!sent) {
     return NextResponse.json(
       {
         error:
@@ -199,6 +158,10 @@ export async function POST(req: NextRequest) {
       { status: 502 }
     );
   }
+
+  // Server-confirmed submission: the fresh non-PII id is used only as a
+  // one-time conversion signal on the /thank-you page.
+  return NextResponse.json({ ok: true, enquiryId });
 }
 
 export async function GET() {
