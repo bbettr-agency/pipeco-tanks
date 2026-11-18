@@ -5,8 +5,35 @@ import {
   HONEYPOT_FIELD,
   tankTypeValues,
   solutionTypeValues,
+  tankTypeLabel,
+  solutionLabel,
+  WEBHOOK_ENV_VAR,
 } from "@/config/quote-config";
 import { createEnquiry, ghlConfigured } from "@/lib/ghl";
+
+/** POST the enquiry to the GHL inbound webhook, if configured. Never throws. */
+async function notifyWebhook(payload: Record<string, string>): Promise<void> {
+  const url = process.env[WEBHOOK_ENV_VAR]?.trim();
+  if (!url) {
+    console.warn(`[quote] ${WEBHOOK_ENV_VAR} not set; owner notification skipped.`);
+    return;
+  }
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 8_000);
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+      signal: controller.signal,
+    });
+    if (!res.ok) console.error(`[quote] Webhook notify failed (status ${res.status}).`);
+  } catch {
+    console.error("[quote] Webhook notify failed (network/timeout).");
+  } finally {
+    clearTimeout(timer);
+  }
+}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -133,9 +160,35 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const enquiryId = randomUUID();
+
+    // Notify the GHL inbound-webhook workflow (owner email alert). Best-effort:
+    // the lead is already safely in the CRM, so a webhook failure is logged
+    // (no PII) but never turns a saved enquiry into an error for the visitor.
+    await notifyWebhook({
+      name: data.name,
+      email: data.email,
+      phone: data.phone,
+      tankType: tankTypeLabel(data.tankType) || data.tankType,
+      capacity: data.capacity || "Not specified",
+      location: data.location,
+      requirements: data.requirements,
+      solution: data.solution ? solutionLabel(data.solution) : "",
+      enquiredFrom: data.solution
+        ? solutionLabel(data.solution)
+        : tankTypeLabel(data.tankType) || data.tankType,
+      source: "PIPECO Website",
+      enquiryId,
+      submittedAt: new Date().toLocaleString("en-ZA", {
+        timeZone: "Africa/Johannesburg",
+        dateStyle: "medium",
+        timeStyle: "short",
+      }),
+    });
+
     // Genuine, server-confirmed submission: return a fresh non-PII enquiry id,
     // used only as a one-time conversion signal on the /thank-you page.
-    return NextResponse.json({ ok: true, enquiryId: randomUUID() });
+    return NextResponse.json({ ok: true, enquiryId });
   } catch {
     // Network/timeout or unexpected error. Deliberately no PII logged.
     return NextResponse.json(
